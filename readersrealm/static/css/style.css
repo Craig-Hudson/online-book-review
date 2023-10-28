@@ -1,0 +1,17 @@
+/* Default Css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* NAVIGATION */
+.navbar-toggler {
+    cursor: pointer;
+  }
+  
+  .navbar-toggler:hover {
+    transform: scale(1.1);
+    border-color: whitesmoke;
+  }
+  
