@@ -11,7 +11,7 @@
         <!-- Bootstrap Navigation Links, with Burger Icon for smaller devices -->
         <header class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Readers Realm</a>
+                <a class="navbar-brand" href="{{ url_for('index') }}">Readers Realm</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -23,7 +23,7 @@
                     </form>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Browse Books</a>
@@ -42,13 +42,14 @@
             </div>
         </header>
 
-        <main class="container">
+        <main class="container mt-5 pt-2">
             {% block content %}
+
             {% endblock %}
         </main>
 
         <!-- Bootstrap Footer -->
-        <footer class="footer py-3 mt-5 bg-dark fixed-bottom">
+        <footer class="footer py-3 mt-5 bg-dark">
             <div class="container">
                 <p class="text-center text-white ">@Copyright Readers Realm 2023</p>
             </div>

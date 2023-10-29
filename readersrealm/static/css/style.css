@@ -1,17 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap');
+
 /* Default Css */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ccc;
 }
 
 /* NAVIGATION */
-.navbar-toggler {
-    cursor: pointer;
-  }
-  
-  .navbar-toggler:hover {
+.navbar-toggler:hover {
     transform: scale(1.1);
     border-color: whitesmoke;
   }
-  
+
+
+  /* SEARCH BAR */
+
+  .form-control {
+    background-color: #fff; 
+    border: 1px solid #ced4da;
+    color: #495057; 
+}
+
+.form-control:focus {
+    background-color: #fff; 
+    border-color: #80bdff; 
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+}
+
+.btn-outline-success {
+    color: whitesmoke; 
+    border-color: whitesmoke
+}
+
+.btn-outline-success:hover {
+    background-color: #343a40;
+    border-color: whitesmoke; 
+    transform: scale(1.1);
+}
+
+h1 {
+    color: black;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+.feature-book-image {
+    height: 303px;
+    width: 40%;
+}
+
+.custom-card {
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
+    width: 110%;
+    margin: 0 10px;
+}
+
+.feature-book-image {
+    margin: 0 auto;
+}
+
+/* Mobile media queries */
+/* @media  screen and (max-width: 576px) {
+    .feature-book-image {
+        height: 40vh;
+        
+    }
+} */
+
+/* tablet media queries */
+/* @media  screen and (max-width: 768px) {
+    .feature-book-image {
+        height: 60vh;
+    
+    }
+} */

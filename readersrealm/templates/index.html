@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-center mt-2">Readers Realm</h1>
+
+
+<div class="row mt-3 mb-3 text-white border-light">
+    <div class="col-sm-6">
+        <div class="card mb-4 bg-dark custom-card">
+            <div class="d-flex justify-content-center">
+                <img src="{{ url_for('static', filename='images/book-cover1.webp') }}" class="feature-book-image"
+                    alt=" Featured Book - The Bike Guy">
+            </div>
+            <div class="card-body bg-dark">
+                <h3 class="card-title text-center">The Bike Guy</h3>
+                <p class="card-text"><strong>Description:</strong> The Bike Guy is a young adult novel about a boy named
+                    Alex who loves bikes. He loves to ride them, fix them, and build them. One day, Alex finds a
+                    mysterious old bike in the woods. He takes it home and fixes it up, and soon he is
+                    racing it all over town.
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark border-light"><strong>Author:</strong> Emma Mayers</li>
+                <li class="list-group-item bg-dark border-light">Genre: Fiction</li>
+                <li class="list-group-item bg-dark border-light">Publication Year: 2023</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card mb-4 bg-dark custom-card">
+            <img src="{{ url_for('static', filename='images/book-cover2.webp') }}"
+                class=" text-center feature-book-image" alt="featured book - Create your own business">
+            <div class="card-body bg-dark">
+                <h3 class="card-title text-center">Create Your Own Business</h3>
+                <p class="card-text">Description: A captivating journey through the world of entrepreneurship
+                    and business, "Create Your Own Business" offers practical insights, expert advice,
+                    and real-life success stories. Learn how to turn your passion into profit
+                    and build a thriving enterprise from the ground up
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark border-light">Author: James Murdor</li>
+                <li class="list-group-item bg-dark border-light">Genre: Non-Fiction</li>
+                <li class="list-group-item bg-dark border-light">Publication Year: 2020</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

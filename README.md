@@ -1,110 +1,217 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Readers Realm
 
-Welcome Craig Hudson,
+------------
+[Link to live site here](#  "Link to live site here")
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+<!-- ![Am I responsive image](assets/images/readme-images/am-i-responsive.webp) -->
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+## Table of Contents
 
-## Gitpod Reminders
+- [Readers Realm](#readers-realm)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [User Experience (UX)](#user-experience-ux)
+    - [User Stories (US)](#user-stories-us)
+    - [Design](#design)
+    - [Accessability](#accessability)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+    - [Languages Used](#languages-used)
+    - [Frameworks, Libraries \& Programs Used](#frameworks-libraries--programs-used)
+  - [Testing](#testing)
+    - [Bugs](#bugs)
+  - [Deployment \& Local Development](#deployment--local-development)
+    - [Deployment](#deployment)
+    - [Local Development](#local-development)
+      - [How to Fork](#how-to-fork)
+      - [How to Clone](#how-to-clone)
+  - [Credits](#credits)
+    - [Images used](#images-used)
+    - [Code Used](#code-used)
+    - [Content](#content)
+    - [media](#media)
+    - [Acknowledgments](#acknowledgments)
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## Introduction
 
-`python3 -m http.server`
 
-A blue button should appear to click: _Make Public_,
 
-Another blue button should appear to click: _Open Browser_.
+## User Experience (UX)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+### User Stories (US)
 
-A blue button should appear to click: _Make Public_,
+- **First time visitor goals**
+    1. As a first time visitor I want to be able to easily browse book reviews.
+    2. As a first time visitor I want to be able to navigate around the website with ease.
+    3. As a first time visitor I want a website to visually attractive and provide good user experience
+    4. As a first time visitor I want to be able to create an account.
 
-Another blue button should appear to click: _Open Browser_.
+  - **Returning Visitor goals**
+    1. As a returning Visitor I want to be able to add/edit/delete reviews of other users books
+    2. As a returning Visitor I want to be able to add a book not currently on the website.
+    3. As a returning Visitor I want to be able to search for books with ease.
+    4. As a returning visitor I don't want other users to be able to edit/delete my reviews or books I've added.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+  - **Frequent visitor goals**
+  - 1. As a frequent visitor I want to be able to easily access all books I've added onto the site, and make changes and or delete them where appropriate.
+  - 2. As a frequent visitor I want to be able to easily access all reviews I've added onto the site, and make changes and or delete them where appropriate.
 
-To log into the Heroku toolbelt CLI:
+### Design
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+![color pallette](./documentation/readme/ms3-colour-pallette.png)
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+- 
+  
+  - **typography**
+  - font-family: merriweather sans will be used for all headings spanning across all pages I have opted to use italic also., and then font-family: sans-serif will be used for navigation links, and all page text.
 
-------
+  - **Structure**
+    - 
 
-## Release History
+  - **Imagery**
+  - 
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+  - **Wireframes**
 
-**September 20 2023:** Update Python version to 3.9.17.
+ [View wire frames here](./assets/images/wireframe-images/)
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+### Accessability
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+I have been attentive to make the website as accessible-friendly as possible through the following measures:
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+- Utilizing semantic HTML to provide meaningful structure and enhance accessibility.
+- Incorporating descriptive alt attributes for images on the site to provide alternative text for screen readers.
+- I also tested my website using wave which reports back to me any errors/contrast errors that may occur.
+  
+By implementing them few points above I have made my webpage as accessible and user friendly as possible taking into account those who may be visually impaired and require screen readers for assistance.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+## Features
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+- 
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+## Technologies Used
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+### Languages Used
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+HTML, CSS, JavaScript and Python have been used for this project.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+### Frameworks, Libraries & Programs Used
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+Git - For version control.
+Bootstrap v4.6.0 - For responsiveness and page layouts
+Flask
+Jinja2
+postgreSQL
+sqlalchemy
+​
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+[Github](https://github.com/Craig-Hudson) - To save and store the files for the website.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+​
+[Google Fonts](https://fonts.google.com/) - To import the fonts used on the website.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+​
+[Font Awesome](https://fontawesome.com/) - For the iconography on the website.
 
-------
+​Chrome Dev Tools - To troubleshoot and test features, solve issues with responsiveness and styling.
 
-## FAQ about the uptime script
+[Convert png to webp](https://www.freeconvert.com/) - I converted my images to webp using this site.
 
-**Why have you added this script?**
+[tiny.png](https://tinypng.com/) - To reduce the file size of my images for better website performance
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+[Image resizer](https://www.resizepixel.com/) - To reduce any unnecessary height and width on photos, also minimizing file size.
 
-**How will this affect me?**
+Balsamiq - I used Balsamiq wireframes from a desktop app for my wireframes,
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+[W3School](https://www.w3schools.com/) To refer to anything Java script related that i may have been unsure of.
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+VsCode - I have used vscode as my ide
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
 
-**So….?**
+## Testing
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+All my testing can be found in the [testing file](testing.md)
 
-**Can I opt out?**
+### Bugs
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+- **Solved Bugs**
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
 
-**Anything more?**
+- **Known Bugs**
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+Currently There is no known bugs
 
----
+## Deployment & Local Development
 
-Happy coding!
+### Deployment
+
+Github Pages was used to deploy the live website. The instructions to achieve this are below:
+​
+
+1. Log in (or sign up) to Github.
+2. Find the repository for this project here > [Millionaire](<https://github.com/Craig-Hudson/Millionaire>)
+3. Click on the Settings link.
+4. Click on the Pages link in the left hand side navigation bar.
+5. In the Source section, choose main from the drop down select branch menu. Select Root from the drop down select folder menu.
+6. Click Save. Your live Github Pages site is now deployed at the URL shown.
+​
+
+### Local Development
+
+#### How to Fork
+
+​
+To fork The Millionaire repository:
+​
+
+1. Log in (or sign up) to Github.
+2. Go to the repository for this project, Millionaire !(<https://github.com/Craig-Hudson/Millionaire.git>)
+3. Click the Fork button in the top right corner.
+​
+
+#### How to Clone
+
+​
+To clone The Millionaire repository:
+​
+
+1. Log in (or sign up) to GitHub.
+2. Go to the repository for this project.
+3. Click on the code button, select whether you would like to clone with HTTPS !(<https://github.com/Craig-Hudson/Millionaire.git>) and copy the link shown.
+4. Open the terminal in your code editor and change the current working directory to the location you want to use for the cloned directory.
+5. Type 'git clone' into the terminal and then paste the link you copied in step 3. Press enter.
+​
+
+## Credits
+
+### Images used
+
+- Image by "https://www.freepik.com/free-vector/bike-guy-wattpad-book-cover_28596242.htm#query=book%20covers&position=4&from_view=keyword&track=ais"
+- Image by "https://www.freepik.com/free-vector/minimalist-book-cover-template_13209950.htm#query=book%20covers&position=10&from_view=keyword&track=ais"
+
+### Code Used
+
+- Most of the code in this project was written my myself, references to w3schools and mdn web docs have been made with some of the code also, weather thats remembering a syntax, or re jogging my memory.
+
+
+
+### Content
+
+The use of the information which I used for the sanitizeAnswer function which I used some of the code from an stack overflow post and the high score local storage functions in the game.js and home.js files which I used a youtube tutorial for.
+The use of w3schools for any prompts for any syntax I may of needed a reminder off.
+
+The other content for this project was written by Craig Hudson.
+
+### media
+
+- All Images for the site were all taken from [vecteezy](https://www.vecteezy.com/)
+
+### Acknowledgments
+
+I would like to acknowledge the following people who helped me along the way in completing this project:
+
+- My code institute mentor Narender Singh for feedback and the many ways I can improve.
+- My partner for having the patience with me and allowing me more time to work on projects.
+- My fellow classmates Ross and dan for any hints and tips that they have given me over the last few weeks.
+- Other family who have helped test my quiz application and given me constructive feedback, and ideas that I would be able to improve the quiz application.
