@@ -3,10 +3,12 @@
 
 <h1 class="text-center mt-2">Readers Realm</h1>
 
-
-<div class="row mt-3 mb-3 text-white border-light">
-    <div class="col-sm-6">
-        <div class="card mb-4 bg-dark custom-card">
+<div class="row mt-3 mb-3 text-white border-light d-flex justify-content-between">
+    <div class="col-12 text-center">
+        <h2>Featured Books</h2>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4 bg-dark custom-card h-100">
             <div class="d-flex justify-content-center">
                 <img src="{{ url_for('static', filename='images/book-cover1.webp') }}" class="feature-book-image"
                     alt=" Featured Book - The Bike Guy">
@@ -21,32 +23,55 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dark border-light"><strong>Author:</strong> Emma Mayers</li>
-                <li class="list-group-item bg-dark border-light">Genre: Fiction</li>
-                <li class="list-group-item bg-dark border-light">Publication Year: 2023</li>
+                <li class="list-group-item bg-dark border-light"><strong>Genre:</strong> Fiction</li>
+                <li class="list-group-item bg-dark border-light"><strong>Year:</strong> 2023</li>
             </ul>
         </div>
     </div>
 
-    <div class="col-sm-6">
-        <div class="card mb-4 bg-dark custom-card">
+    <div class="col-md-6 card-margin">
+        <div class="card mb-4 bg-dark custom-card h-100">
             <img src="{{ url_for('static', filename='images/book-cover2.webp') }}"
                 class=" text-center feature-book-image" alt="featured book - Create your own business">
             <div class="card-body bg-dark">
                 <h3 class="card-title text-center">Create Your Own Business</h3>
-                <p class="card-text">Description: A captivating journey through the world of entrepreneurship
+                <p class="card-text"><strong>Description:</strong> A captivating journey through the world of entrepreneurship
                     and business, "Create Your Own Business" offers practical insights, expert advice,
                     and real-life success stories. Learn how to turn your passion into profit
                     and build a thriving enterprise from the ground up
                 </p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-dark border-light">Author: James Murdor</li>
-                <li class="list-group-item bg-dark border-light">Genre: Non-Fiction</li>
-                <li class="list-group-item bg-dark border-light">Publication Year: 2020</li>
+                <li class="list-group-item bg-dark border-light"><strong>Author:</strong> James Murdor</li>
+                <li class="list-group-item bg-dark border-light"><strong>Genre:</strong> Non-Fiction</li>
+                <li class="list-group-item bg-dark border-light"><strong>Publication Year:</strong> 2020</li>
             </ul>
         </div>
     </div>
 </div>
 
+<section id="about" class="container mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="text-center">About Us</h2>
+        <p>Welcome to Readers Realm, your one-stop shop for all things book reviews!
+            We are a team of passionate bookworms who love nothing more than sharing our
+            thoughts on the latest and greatest books. We believe that books have the power
+            to transport us to other worlds, teach us new things, and inspire us
+            to be better people.
+        </p>
+        <p>That's why we created Readers Realm - to provide a space where book lovers can
+            come together to share their love of books. Here, you can find reviews
+            of all genres of books, from fiction to non-fiction, from classics to contemporary.
+            We highly recommend registering up to readers realm, where you be able ot unlock the
+            ability to add/edit and or delete your own reviews, not to mention
+             adding/editing and deleting your own books that you've added to readers realm.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <img src="{{ url_for('static', filename='images/pexels-helena-lopes.webp') }}" alt="People reading and reviewing books" class="img-fluid">
+      </div>
+    </div>
+  </section>
 
 {% endblock %}

@@ -24,7 +24,7 @@ body {
 
   /* SEARCH BAR */
 
-  .form-control {
+.form-control {
     background-color: #fff; 
     border: 1px solid #ced4da;
     color: #495057; 
@@ -47,39 +47,36 @@ body {
     transform: scale(1.1);
 }
 
-h1 {
+h1, h2, h3 {
     color: black;
     font-family: 'Merriweather Sans', sans-serif;
 }
 
-.feature-book-image {
-    height: 303px;
-    width: 40%;
-}
 
-.custom-card {
-    border: 2px solid whitesmoke;
-    border-radius: 15px;
-    width: 110%;
-    margin: 0 10px;
-}
-
+/* Featured Books */
 .feature-book-image {
+    height: 300px;
     margin: 0 auto;
 }
 
+.badge {
+    position: relative;
+    right: 0;
+    top: 0;
+}
+
+.custom-card {
+    border: 2px solid whitesmoke!important;
+    border-radius: 15px;
+    width: 100%;
+}
+
+
+
 /* Mobile media queries */
-/* @media  screen and (max-width: 576px) {
-    .feature-book-image {
-        height: 40vh;
-        
-    }
-} */
+
+
 
 /* tablet media queries */
-/* @media  screen and (max-width: 768px) {
-    .feature-book-image {
-        height: 60vh;
-    
-    }
-} */
+
+
