@@ -50,6 +50,7 @@ body {
 h1, h2, h3 {
     color: black;
     font-family: 'Merriweather Sans', sans-serif;
+    font-weight: 700;
 }
 
 
@@ -72,7 +73,20 @@ h1, h2, h3 {
 }
 
 
+/* Footer */
 
+/* .social-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+} */
+
+.social-link {
+    font-size: 20px;
+    color: whitesmoke;
+    padding: 0 10px;
+    text-decoration: none;
+}
 /* Mobile media queries */
 
 

@@ -136,7 +136,8 @@ All my testing can be found in the [testing file](testing.md)
 ### Bugs
 
 - **Solved Bugs**
-
+- Navigation links between 768px and 940px were being squished as I had the burger icon
+  only displayed up until , so I managed to adjust the necessary bootstrap class navbar-expand to ensure the navigation links were being responsive and weren't still squished.
 
 - **Known Bugs**
 
