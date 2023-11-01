@@ -7,7 +7,18 @@
         <div class="card card-body">
             <h1>Register</h1>
 
-            <form action="/register" method="post">
+            <!-- Include code to display flash messages here -->
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class="flashes">
+                  {% for message in messages %}
+                    <li>{{ message }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('register_post') }}" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" class="form-control" id="username" name="username" required>
@@ -24,6 +35,13 @@
                     <label for="password_confirmation">Password Confirmation</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                 </div>
+
+                <!-- Add a condition to display password requirements message -->
+                {% if 'Password must meet requirements' in messages %}
+                  <div class="alert alert-danger" role="alert">
+                    {{ messages[0] }}
+                  </div>
+                {% endif %}
 
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
