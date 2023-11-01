@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 if os.path.exists("env.py"):
     import env  # noqa
 
-
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
@@ -19,4 +18,4 @@ else:
 
 db = SQLAlchemy(app)
 
-from readersrealm import routes  # noqa
+from readersrealm import routes

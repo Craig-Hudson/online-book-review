@@ -1,8 +1,14 @@
 from flask import render_template, request, redirect, url_for, flash
 from readersrealm import app, db
-from werkzeug.security import generate_password_hash, check_password_hash
 from readersrealm.models import User
+from werkzeug.security import generate_password_hash, check_password_hash
+import re
 
+# Password pattern that enforces at least 8 characters with 1 number and 1 special character
+password_pattern = r'^(?=.*[0-9])(?=.*[!@#$%^&*()_+|~=\-\\[\];\',./{}:<>?])([A-Za-z0-9!@#$%^&*()_+|~=\-\\[\];\',./{}:<>?]){8,}$'
+
+def is_valid_password(password):
+    return re.match(password_pattern, password) is not None
 
 @app.route("/")
 def index():
@@ -16,11 +22,16 @@ def register():
 # Define a route for processing the registration form
 @app.route('/register', methods=['GET', 'POST'])
 def register_post():
-    if request.method == 'POST':
+    if request.method == "POST":
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
         password_confirmation = request.form.get('password_confirmation')
+        print("Form Data:", request.form)
+
+        if not is_valid_password(password):
+            flash("Password must be at least 8 characters long and contain 1 number and 1 special character.", 'error')
+            return render_template('register.html')
 
         # Check if the username and email are already in use
         user = User.query.filter_by(username=username).first()
@@ -28,25 +39,28 @@ def register_post():
 
         if user or email_user:
             flash('Username or email already in use.', 'error')
-        elif password != password_confirmation:
+            return render_template('register.html')
+
+        if password != password_confirmation:
             flash('Passwords do not match.', 'error')
-        else:
-            # Hash and salt the password before storing it in the database
-            hashed_password = generate_password_hash(password, method='sha256')
+            return render_template('register.html')
 
-            # Create a new user record
-            new_user = User(username=username, email=email, password=hashed_password)
+        # Hash the password before storing it in the database
+        password_hash = generate_password_hash(password)
 
-            # Add the new user record to the database
-            db.session.add(new_user)
-            db.session.commit()
+        # Create a new user record
+        user = User(username=username, email=email, password=password_hash, password_confirmation=password_hash)  # Store the hashed password
 
-            flash('Registration successful. You can now log in.', 'success')
-            return redirect(url_for('login'))
+        # Add the new user record to the database
+        db.session.add(user)
+        db.session.commit()
 
-    return render_template('register.html')
+        flash('Registration successful!', 'success')
+        return redirect('/login')
+
+    return render_template('register.html', username=username, email=email)
 
 
 @app.route('/login')
 def login():
-    render_template('login.html')
+    return render_template("login.html")
