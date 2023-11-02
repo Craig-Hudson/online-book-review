@@ -70,20 +70,30 @@ def register_post():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    logged_in = False
+    user = None  # Initialize user as None
+
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
-
-        if user and check_password_hash(user.password, password):
-            # Successful login
-            session['user_id'] = user.id
-            flash('Login successful!', 'success')
-            return redirect(url_for('index'))  # Redirect to the home page or another protected page
-        else:
-            # Invalid login
-            flash('Invalid username or password. Please try again.', 'error')
+        
+    if user and check_password_hash(user.password, password):
+        # Successful login
+        session['logged_in'] = True
+        session['user_id'] = user.id
+        flash('Login successful!', 'success')
+        return redirect(url_for('index'))  # Redirect to the home page
+    else:
+        # Invalid login
+        flash('Invalid username or password. Please try again.', 'error')
 
     return render_template("login.html")
 
+
+@app.route('/logout')
+def logout():
+    session.clear()  # Clear all session data
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('index'))
