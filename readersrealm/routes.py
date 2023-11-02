@@ -1,4 +1,10 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import(
+    render_template,
+    request, 
+    redirect, 
+    url_for,
+    flash,
+    session)
 from readersrealm import app, db
 from readersrealm.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,7 +26,7 @@ def register():
     return render_template('register.html')
 
 # Define a route for processing the registration form
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register_post', methods=['GET', 'POST'])
 def register_post():
     if request.method == "POST":
         username = request.form.get('username')
@@ -49,18 +55,35 @@ def register_post():
         password_hash = generate_password_hash(password)
 
         # Create a new user record
-        user = User(username=username, email=email, password=password_hash, password_confirmation=password_hash)  # Store the hashed password
+        new_user = User(username=username, email=email, password=password_hash,
+                         password_confirmation=password_hash)  # Store the hashed password
 
         # Add the new user record to the database
-        db.session.add(user)
+        db.session.add(new_user)
         db.session.commit()
-
+        
         flash('Registration successful!', 'success')
         return redirect('/login')
 
     return render_template('register.html', username=username, email=email)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and check_password_hash(user.password, password):
+            # Successful login
+            session['user_id'] = user.id
+            flash('Login successful!', 'success')
+            return redirect(url_for('index'))  # Redirect to the home page or another protected page
+        else:
+            # Invalid login
+            flash('Invalid username or password. Please try again.', 'error')
+
     return render_template("login.html")
+

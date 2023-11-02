@@ -1,46 +1,39 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="container">
-
     <div class="col-md-6 offset-md-3">
         <div class="card card-body">
             <h1>Register</h1>
 
-            <!-- Include code to display flash messages here -->
-            {% with messages = get_flashed_messages() %}
-              {% if messages %}
-                <ul class="flashes">
-                  {% for message in messages %}
-                    <li>{{ message }}</li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
-            {% endwith %}
-
-            <form action="{{ url_for('register_post') }}" method="post">
+            <form action="/register_post" method="POST"
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <input type="text" class="form-control" id="username" name="username" required />
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" required />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password" required />
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation">Password Confirmation</label>
-                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required />
                 </div>
-
+                {% with messages = get_flashed_messages() %} 
+                {% if messages %}
+                  <ul class="flashes alert alert-danger">
+                      {% for message in messages %}
+                      <li>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+                {% endif %} 
+                {% endwith %}
                 <!-- Add a condition to display password requirements message -->
                 {% if 'Password must meet requirements' in messages %}
-                  <div class="alert alert-danger" role="alert">
-                    {{ messages[0] }}
-                  </div>
+                  <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
                 {% endif %}
 
                 <button type="submit" class="btn btn-primary">Register</button>
