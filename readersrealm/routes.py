@@ -43,10 +43,12 @@ def register_post():
         user = User.query.filter_by(username=username).first()
         email_user = User.query.filter_by(email=email).first()
 
+        # Error handling to check weather username or email has already been taken
         if user or email_user:
             flash('Username or email already in use.', 'error')
             return render_template('register.html')
-
+        
+        # Error handling to check weather the password and password confirmation match.
         if password != password_confirmation:
             flash('Passwords do not match.', 'error')
             return render_template('register.html')
@@ -70,30 +72,31 @@ def register_post():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    logged_in = False
-    user = None  # Initialize user as None
-
+    """
+    Function to log users in by getting the information from that database
+    also using error handling to ensure the user has entered the correct
+    username and password
+    """
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
-        
-    if user and check_password_hash(user.password, password):
-        # Successful login
-        session['logged_in'] = True
-        session['user_id'] = user.id
-        flash('Login successful!', 'success')
-        return redirect(url_for('index'))  # Redirect to the home page
-    else:
-        # Invalid login
-        flash('Invalid username or password. Please try again.', 'error')
+
+        if user and check_password_hash(user.password, password):
+            # Successful login
+            session['logged_in'] = True
+            session['user_id'] = user.id
+            redirect(url_for('index'))  # Redirect to the home page
+        else:
+            # Invalid login
+            flash('Invalid username or password. Please try again.', 'error')
 
     return render_template("login.html")
+
 
 
 @app.route('/logout')
 def logout():
     session.clear()  # Clear all session data
-    flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
