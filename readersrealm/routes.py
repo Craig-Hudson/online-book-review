@@ -100,3 +100,8 @@ def login():
 def logout():
     session.clear()  # Clear all session data
     return redirect(url_for('index'))
+
+
+@app.route('/browse_books')
+def browse_books():
+    return render_template('browse-books.html')

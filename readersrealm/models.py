@@ -27,6 +27,7 @@ class Book(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     description = db.Column(db.String(200))
     publication_year = db.Column(db.Integer)
+    image_url = db.Column(db.String(255))
 
 
 class Genre(db.Model):
