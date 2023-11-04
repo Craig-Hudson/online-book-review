@@ -6,7 +6,7 @@ from flask import(
     flash,
     session)
 from readersrealm import app, db
-from readersrealm.models import User
+from readersrealm.models import User, Author, Book
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
 
@@ -105,3 +105,48 @@ def logout():
 @app.route('/browse_books')
 def browse_books():
     return render_template('browse-books.html')
+
+
+@app.route('/add_book')
+def add_book():
+    return render_template('add-book.html')
+
+
+@app.route('/add_book_form', methods=['GET', 'POST'])
+def add_book_form():
+    """
+    Function to firstly retrieve the form data, then checks if an author is already in the database
+    if not then add new author to the database.
+    then add all the details associated with the book to the database
+    """
+    if request.method == 'POST':
+        title = request.form['title']
+        author_name = request.form['author_name']  # User-provided author name
+        description = request.form['description']
+        publication_year = request.form['publication_year']
+        image_url= request.form['image_url']
+
+        # Check if the author already exists in the database
+        author = Author.query.filter_by(name=author_name).first()
+
+        if not author:
+            # If the author doesn't exist, create a new author
+            author = Author(name=author_name)
+            db.session.add(author)
+            db.session.commit()
+        
+        user_id = session.get('user_id')
+
+        new_book = Book(title=title,
+                        author_id=author.id,
+                        description=description,
+                        publication_year=publication_year,
+                        image_url=image_url,
+                        user_id=user_id)
+        db.session.add(new_book)
+        db.session.commit()
+
+        return redirect(url_for('browse_books')) 
+
+    return render_template('book_form.html')  # Render the book entry form
+

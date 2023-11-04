@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <div class="page-title d-flex align-items-center">
     <h1 class="text-center mt-5 mb-5 flex-grow-1">Discover Your Next Favorite Book</h1>
-    <a href="#" class="btn btn-primary">Add Book</a>
+    <a href="{{ url_for('add_book') }}" class="btn btn-primary">Add Book</a>
 </div>
 <div class="row">
     <div class="col-md-3">

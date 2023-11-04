@@ -15,9 +15,9 @@ class User(db.Model):
 
 
 class Author(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
-    biography = db.Column(db.Text)
+
 
 
 class Book(db.Model):
@@ -28,6 +28,7 @@ class Book(db.Model):
     description = db.Column(db.String(200))
     publication_year = db.Column(db.Integer)
     image_url = db.Column(db.String(255))
+    author = db.relationship('Author', backref='books')
 
 
 class Genre(db.Model):
