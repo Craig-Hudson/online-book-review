@@ -1,5 +1,6 @@
 import os
-from readersrealm import app, db  # I'm assuming `db` is also defined in `readersrealm`
+from flask import Flask
+from readersrealm import app, db
 from flask_migrate import Migrate
 
 # Initialize Flask-Migrate

@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="page-title d-flex align-items-center">
     <h1 class="text-center mt-5 mb-5 flex-grow-1">Discover Your Next Favorite Book</h1>
     <a href="{{ url_for('add_book') }}" class="btn btn-primary">Add Book</a>
@@ -11,7 +9,12 @@
         {% for book in books %}
         <div class="col-md-3 mb-4">
             <div class="card">
-                <img src="{{ book.image_url }}" class="card-img-top" alt="{{ book.title }}">
+                {% if book.image_url == "not-available.webp"  %}
+                <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
+                {% else %}
+                <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}" />
+                {% endif %}
+
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ book.title }}</h5>
                     <p class="card-text">{{ book.description }}</p>

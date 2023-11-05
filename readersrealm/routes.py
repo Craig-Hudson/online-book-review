@@ -138,7 +138,7 @@ def add_book_form():
             db.session.commit()
         
         if not image_url:
-            image_url = url_for('static', filename='not-available.webp')
+            image_url = url_for('static', filename='images/not-available.webp')
 
         user_id = session.get('user_id')
 

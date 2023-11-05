@@ -1,6 +1,7 @@
 import os
 import re
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 if os.path.exists("env.py"):
     import env  # noqa
@@ -17,5 +18,6 @@ else:
     app.config["SQLALCHEMY_DATABASE_URI"] = uri  # heroku
 
 db = SQLAlchemy(app)
+migrate=Migrate(app, db)
 
 from readersrealm import routes

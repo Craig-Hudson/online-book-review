@@ -139,6 +139,10 @@ All my testing can be found in the [testing file](testing.md)
 - Navigation links between 768px and 940px were being squished as I had the burger icon
   only displayed up until , so I managed to adjust the necessary bootstrap class navbar-expand to ensure the navigation links were being responsive and weren't still squished.
 
+- When the users enter the form to add books into the database that all worked ok with pulling out image urls and putting them
+onto the browse-books.html page, but the issue I had was with storing a default image, if the user choice weather or not to
+enter an image of the book,
+
 - **Known Bugs**
 
 Currently There is no known bugs
