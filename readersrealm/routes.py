@@ -87,7 +87,7 @@ def login():
             # Successful login
             session['logged_in'] = True
             session['user_id'] = user.id
-            redirect(url_for('index'))  # Redirect to the home page
+            return redirect(url_for('index'))  # Redirect to the home page
         else:
             # Invalid login
             flash('Invalid username or password. Please try again.', 'error')
@@ -104,7 +104,8 @@ def logout():
 
 @app.route('/browse_books')
 def browse_books():
-    return render_template('browse-books.html')
+    books = Book.query.all()
+    return render_template('browse-books.html', books=books)
 
 
 @app.route('/add_book')
@@ -125,6 +126,7 @@ def add_book_form():
         description = request.form['description']
         publication_year = request.form['publication_year']
         image_url= request.form['image_url']
+        genre = request.form['genre']
 
         # Check if the author already exists in the database
         author = Author.query.filter_by(name=author_name).first()
@@ -135,18 +137,30 @@ def add_book_form():
             db.session.add(author)
             db.session.commit()
         
+        if not image_url:
+            image_url = url_for('static', filename='not-available.webp')
+
         user_id = session.get('user_id')
+
+        # Check if a book with the same title and author already exists
+        existing_book = Book.query.join(Author).filter(
+                        Book.title == title, Author.name == author_name).first()
+
+        if existing_book:
+            flash('This book already exists.', 'error')
+            return redirect(url_for('add_book_form'))
 
         new_book = Book(title=title,
                         author_id=author.id,
                         description=description,
                         publication_year=publication_year,
                         image_url=image_url,
-                        user_id=user_id)
+                        user_id=user_id,
+                        genre=genre)
         db.session.add(new_book)
         db.session.commit()
 
         return redirect(url_for('browse_books')) 
 
-    return render_template('book_form.html')  # Render the book entry form
+    return render_template('add-book.html')  # Render the book entry form
 

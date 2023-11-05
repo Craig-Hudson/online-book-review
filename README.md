@@ -190,6 +190,8 @@ To clone The Millionaire repository:
 
 - Image by "https://www.freepik.com/free-vector/bike-guy-wattpad-book-cover_28596242.htm#query=book%20covers&position=4&from_view=keyword&track=ais"
 - Image by "https://www.freepik.com/free-vector/minimalist-book-cover-template_13209950.htm#query=book%20covers&position=10&from_view=keyword&track=ais"
+-Image by https://www.freepik.com/free-vector/gradient-no-photo-sign-design_22890125.htm#query=unavailable%20image&position=1&from_view=search&track=ais
+
 
 ### Code Used
 
