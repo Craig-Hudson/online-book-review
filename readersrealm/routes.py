@@ -6,7 +6,7 @@ from flask import(
     flash,
     session)
 from readersrealm import app, db
-from readersrealm.models import User, Author, Book
+from readersrealm.models import User, Author, Book, Review
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
 
@@ -164,3 +164,40 @@ def add_book_form():
 
     return render_template('add-book.html')  # Render the book entry form
 
+
+@app.route('/reviews/<book_id>', methods=['GET'])
+def reviews(book_id):
+    book = Book.query.get(book_id)
+    reviews = Review.query.filter_by(book_id=book.id).all()
+    print("Book ID:", book_id)
+    print("Book:", book)
+    print("Reviews:", reviews)
+
+    return render_template('reviews.html', book=book, reviews=reviews)
+
+
+
+
+
+@app.route('/add_review/<book_id>', methods=['GET', 'POST'])
+def add_review(book_id):
+    book = Book.query.get(book_id)  # Move the book query here to make it available for both cases
+
+    if 'user_id' not in session:
+        flash('Please log in to add a review.', 'error')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        user_id = session['user_id']  # Get the user's ID from the session
+        rating = request.form['rating']  # Capture the rating from the form
+        comment = request.form['comment']  # Capture the review content (comment)
+
+        # Create a new review with the above data
+        new_review = Review(user_id=user_id, book_id=book_id, rating=rating, comment=comment)
+        db.session.add(new_review)
+        db.session.commit()
+
+        flash('Review added successfully!', 'success')
+        return redirect(url_for('reviews', book_id=book_id))
+
+    return render_template('add-review.html', book_id=book_id, book=book)

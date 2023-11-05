@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card mt-4">
+                {% if book.image_url == "not-available.webp" %}
+                <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
+                {% else %}
+                <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}" />
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ book.title }}</h5>
+                    <p class="card-text">{{ book.description }}</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Author:</strong> {{ book.author.name }}</li>
+                        <li class="list-group-item"><strong>Genre:</strong> {{ book.genre }}</li>
+                        <li class="list-group-item"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <a href="{{ url_for('add_review', book_id=book.id) }}" class="btn btn-primary btn-block">Add Review</a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <h2>Reviews:</h2>
+            <ul class="list-group">
+                {% for review in reviews %}
+                <li class="list-group-item">
+                    <p><strong>Rating:</strong> {{ review.rating }}</p>
+                    <p><strong>Review Date:</strong> {{ review.review_date }}</p>
+                    <p><strong>Comment:</strong> {{ review.comment }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

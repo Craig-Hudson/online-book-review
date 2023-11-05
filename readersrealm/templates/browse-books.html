@@ -25,7 +25,7 @@
                     <li class="list-group-item"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
                 </ul>
                 <div class="card-body">
-                    <a href="{{ url_for('index', book_id=book.id) }}" class="btn btn-primary btn-block">View Reviews</a>
+                    <a href="{{ url_for('reviews', book_id=book.id) }}" class="btn btn-primary btn-block">View Reviews</a>
                 </div>
             </div>
         </div>
