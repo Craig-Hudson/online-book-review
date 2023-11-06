@@ -5,24 +5,24 @@
 </div>
 
 <div class="container mt-4">
-    <div class="row">
+    <div class="row text-white">
         {% for book in books %}
         <div class="col-md-3 mb-4">
-            <div class="card">
+            <div class="card bg-dark">
                 {% if book.image_url == "not-available.webp"  %}
                 <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
                 {% else %}
                 <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}" />
                 {% endif %}
 
-                <div class="card-body">
-                    <h5 class="card-title text-center">{{ book.title }}</h5>
+                <div class="card-body bg-dark">
+                    <h5 class="card-title text-center text-white">{{ book.title }}</h5>
                     <p class="card-text">{{ book.description }}</p>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Author:</strong> {{ book.author.name }}</li>
-                    <li class="list-group-item"><strong>Genre:</strong> {{ book.genre }}</li>
-                    <li class="list-group-item"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
+                <ul class="list-group list-group-flush bg-dark">
+                    <li class="list-group-item bg-dark"><strong>Author:</strong> {{ book.author.name }}</li>
+                    <li class="list-group-item bg-dark"><strong>Genre:</strong> {{ book.genre }}</li>
+                    <li class="list-group-item bg-dark"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
                 </ul>
                 <div class="card-body">
                     <a href="{{ url_for('reviews', book_id=book.id) }}" class="btn btn-primary btn-block">View Reviews</a>

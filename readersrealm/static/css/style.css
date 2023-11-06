@@ -93,6 +93,21 @@ footer {
     text-decoration: none;
 }
 
+/* .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-body {
+    flex-grow: 1;
+}
+
+.card-img-top {
+    height: 50%!important;
+    object-fit: cover;
+} */
+
 .register-form {
     height: 80vh;
     display: flex;

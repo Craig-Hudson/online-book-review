@@ -33,9 +33,9 @@
             <h2>Reviews:</h2>
             <ul class="list-group">
                 {% for review in reviews %}
-                <li class="list-group-item">
+                <li class="list-group-item mb-3">
                     <p><strong>Rating:</strong> {{ review.rating }}</p>
-                    <p><strong>Review Date:</strong> {{ review.review_date }}</p>
+                    <p><strong>Review Date:</strong> {{ review.review_date.strftime("%d-%m-%y %H:%M:%S") }}</p>
                     <p><strong>Comment:</strong> {{ review.comment }}</p>
                 </li>
                 {% endfor %}
