@@ -87,6 +87,7 @@ def login():
             # Successful login
             session['logged_in'] = True
             session['user_id'] = user.id
+            session['username'] = username
             return redirect(url_for('index'))  # Redirect to the home page
         else:
             # Invalid login
@@ -201,3 +202,58 @@ def add_review(book_id):
         return redirect(url_for('reviews', book_id=book_id))
 
     return render_template('add-review.html', book_id=book_id, book=book)
+
+@app.route('/edit_review')
+def edit_review():
+    return render_template('edit-review.html')
+
+
+@app.route('/delete_review')
+def delete_review():
+    return render_template('delete-review.html')
+
+
+@app.route('/edit_book/<book_id>', methods=['GET', 'POST'])
+def edit_book(book_id):
+    return render_template('edit-book.html')
+
+
+@app.route('/delete_book/<int:book_id>', methods=['POST'])
+def delete_book(book_id):
+    # Retrieve the book from the database
+    book = Book.query.get(book_id)
+
+    if book:
+        # Delete the book from the database
+        db.session.delete(book)
+        db.session.commit()
+
+    # Redirect to a page (e.g., the browse_books page) after deletion
+    return redirect(url_for('browse_books'))
+
+
+
+
+@app.route('/profile/<username>')
+def profile(username):
+    if session.get('username'):
+        current_username = session['username']
+        if username == current_username:
+            user = User.query.filter_by(username=username).first()
+            if user:
+                reviews = Review.query.filter_by(user_id=user.id).all()
+                books = Book.query.filter_by(user_id=user.id).all()
+                return render_template('profile.html', user=user, reviews=reviews, books=books)
+            else:
+                flash('User not found.', 'error')
+                return redirect(url_for('index'))
+        else:
+            flash('Unauthorized access.', 'error')
+            return redirect(url_for('index'))
+    else:
+        flash('Please log in to view profiles.', 'error')
+        return redirect(url_for('login'))
+
+
+
+
