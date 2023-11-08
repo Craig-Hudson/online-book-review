@@ -9,8 +9,8 @@ class User(db.Model):
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     password_confirmation = db.Column(db.String(255), nullable=False)
-    reviews = db.relationship('Review', backref='user', lazy=True)
-    books = db.relationship('Book', backref='user', lazy=True)
+    reviews = db.relationship('Review', backref='user_reviews', lazy=True)
+    books = db.relationship('Book', backref='owner', lazy=True)
 
 
     def __repr__(self):
@@ -33,6 +33,7 @@ class Book(db.Model):
     publication_year = db.Column(db.Integer)
     image_url = db.Column(db.String(255), default='not-available.webp')
     author = db.relationship('Author', backref='books')
+    reviews = db.relationship('Review', cascade='delete')
 
 
 class Genre(db.Model):
@@ -54,3 +55,5 @@ class Review(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text)
     review_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    user = db.relationship('User', backref='user_reviews')
+    book = db.relationship('Book', backref='user_reviews')
