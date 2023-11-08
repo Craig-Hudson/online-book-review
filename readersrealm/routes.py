@@ -182,7 +182,7 @@ def reviews(book_id):
 
 @app.route('/add_review/<book_id>', methods=['GET', 'POST'])
 def add_review(book_id):
-    book = Book.query.get(book_id)  # Move the book query here to make it available for both cases
+    book = Book.query.get(book_id)   
 
     if 'user_id' not in session:
         flash('Please log in to add a review.', 'error')
@@ -203,14 +203,57 @@ def add_review(book_id):
 
     return render_template('add-review.html', book_id=book_id, book=book)
 
-@app.route('/edit_review')
-def edit_review():
-    return render_template('edit-review.html')
+@app.route('/edit_review/<int:review_id>', methods=['GET', 'POST'])
+def edit_review(review_id):
+    review = Review.query.get(review_id)
+    if review is None:
+        flash('Review not found.', 'error')
+        return redirect(url_for('index'))
+    
+    book = Book.query.get(review.book_id)
+
+    if request.method == 'POST':
+        # Handle the form submission with the updated review data
+        new_rating = request.form.get('rating')
+        new_comment = request.form.get('comment')
+        
+        # Update the review in the database with the new data
+        review.rating = new_rating
+        review.comment = new_comment
+        db.session.commit()
+        
+        flash('Review updated successfully!', 'success')
+        return redirect(url_for('index'))
+    
+    return render_template('edit-review.html', review=review, book=book, review_id=review_id)
 
 
-@app.route('/delete_review')
-def delete_review():
-    return render_template('delete-review.html')
+
+@app.route('/delete_review/<int:review_id>')
+def delete_review(review_id):
+    review = Review.query.get(review_id)
+    user = None  # Initialize user to None
+
+    if review:
+        db.session.delete(review)
+        db.session.commit()
+
+      
+        user = User.query.get(review.user_id)
+
+    if user:
+        # Render the template with the user variable
+        return render_template('profile.html', user=user, review_deleted=True)
+    else:
+        flash('User not found.', 'error')
+
+    # Review not found or user not found
+    flash('Review not found or user not found.', 'error')
+    return redirect(url_for('profile'))  # Redirect to the profile without a specific username
+
+
+
+
 
 
 @app.route('/edit_book/<book_id>', methods=['GET', 'POST'])
@@ -228,8 +271,8 @@ def delete_book(book_id):
         db.session.delete(book)
         db.session.commit()
 
-    # Redirect to a page (e.g., the browse_books page) after deletion
-    return redirect(url_for('browse_books'))
+    # Redirect back to profile
+    return redirect(url_for('profile/<username>'))
 
 
 
@@ -241,9 +284,10 @@ def profile(username):
         if username == current_username:
             user = User.query.filter_by(username=username).first()
             if user:
+                review_ids = [review.id for review in Review.query.filter_by(user_id=user.id).all()]
                 reviews = Review.query.filter_by(user_id=user.id).all()
                 books = Book.query.filter_by(user_id=user.id).all()
-                return render_template('profile.html', user=user, reviews=reviews, books=books)
+                return render_template('profile.html', user=user, reviews=reviews, books=books, review_ids=review_ids)
             else:
                 flash('User not found.', 'error')
                 return redirect(url_for('index'))
