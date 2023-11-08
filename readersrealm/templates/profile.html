@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
@@ -16,16 +14,20 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">Reviews Added</h5>
-                    <div class="mb-4"></div> <!-- Margin between username column and reviews column -->
+                    <div class="mb-4"></div>
+                    <!-- Margin between username column and reviews column -->
                     {% for review in user.reviews %}
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <p><strong>Rating:</strong> {{ review.rating }}</p>
-                                <p><strong>Review:</strong> {{ review.comment }}</p>
-                                <a href="{{ url_for('edit_review', review_id=review.id) }}" class="btn btn-primary">Edit</a>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3> {{  review.book.title }}</h3>
+                            <p><strong>Rating:</strong> {{ review.rating }}</p>
+                            <p><strong>Review:</strong> {{ review.comment }}</p>
+                            <div class="d-flex justify-content-around">
+                                <a href="{{ url_for('edit_review', username=username, review_id=review.id) }}" class="btn btn-primary">Edit</a>
                                 <a href="{{ url_for('delete_review', review_id=review.id) }}" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
@@ -35,22 +37,25 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">Books Added</h5>
-                    <div class="mb-4"></div> <!-- Margin between username column and books column -->
+                    <div class="mb-4"></div>
+                    <!-- Margin between username column and books column -->
                     {% for book in user.books %}
-                        <div class="card mb-3">
-                            {% if book.image_url == "not-available.webp"  %}
-                            <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
-                            {% else %}
-                            <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}" />
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title text-center">{{ book.title }}</h5>
-                            </div>
-                            <div class="card-footer">
-                                <!-- <a href="{{ url_for('edit_review', review_id=review.id) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ url_for('delete_review', review_id=review.id) }}" class="btn btn-danger">Delete</a> -->
-                            </div>
+                    <div class="card mb-3">
+                        {% if book.image_url == "not-available.webp" %}
+                        <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
+                        {% else %}
+                        <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}" />
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ book.title }}</h5>
                         </div>
+                        <div class="card-footer d-flex justify-content-around">
+                            {% for review in book.reviews %}
+                                <a href="{{ url_for('edit_review', username=username, review_id=review.id) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ url_for('delete_review', review_id=review.id) }}" class="btn btn-danger">Delete</a>
+                            {% endfor %}
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
