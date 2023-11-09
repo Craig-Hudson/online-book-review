@@ -1,30 +1,56 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block content %}
 <div class="container mt-4">
     <div class="row">
+        <!-- User Info Column -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ user.username }}</h5>
-                    <p class="card-text">{{ user.name }}</p>
+                    <p class="card-text text-center"><strong>{{ user.email }}</strong></p>
                 </div>
             </div>
         </div>
 
+        <!-- Reviews Column -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">Reviews Added</h5>
                     <div class="mb-4"></div>
-                    <!-- Margin between username column and reviews column -->
                     {% for review in user.reviews %}
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h3> {{  review.book.title }}</h3>
+                            <h3>{{ review.book.title }}</h3>
                             <p><strong>Rating:</strong> {{ review.rating }}</p>
                             <p><strong>Review:</strong> {{ review.comment }}</p>
                             <div class="d-flex justify-content-around">
-                                <a href="{{ url_for('edit_review', username=username, review_id=review.id) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ url_for('delete_review', review_id=review.id) }}" class="btn btn-danger">Delete</a>
+                                <a href="{{ url_for('edit_review', username=user.username, review_id=review.id) }}" class="btn btn-primary">Edit</a>
+                                <!-- Delete Review Modal Trigger Button -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteReviewModal{{ review.id }}">
+                                    Delete
+                                </button>
+                                <!-- Delete Review Modal -->
+                                <div class="modal fade" id="deleteReviewModal{{ review.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteReviewModalLabel{{ review.id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete this review?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <a href="{{ url_for('delete_review', review_id=review.id) }}" class="btn btn-danger">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -33,12 +59,12 @@
             </div>
         </div>
 
+        <!-- Books Column -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">Books Added</h5>
                     <div class="mb-4"></div>
-                    <!-- Margin between username column and books column -->
                     {% for book in user.books %}
                     <div class="card mb-3">
                         {% if book.image_url == "not-available.webp" %}
@@ -50,10 +76,31 @@
                             <h5 class="card-title text-center">{{ book.title }}</h5>
                         </div>
                         <div class="card-footer d-flex justify-content-around">
-                            {% for review in book.reviews %}
-                                <a href="{{ url_for('edit_review', username=username, review_id=review.id) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ url_for('delete_review', review_id=review.id) }}" class="btn btn-danger">Delete</a>
-                            {% endfor %}
+                            <a href="{{ url_for('edit_book', username=user.username, book_id=book.id) }}" class="btn btn-primary">Edit</a>
+                            <!-- Delete Book Modal Trigger Button -->
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteBookModal{{ book.id }}">
+                                Delete
+                            </button>
+                            <!-- Delete Book Modal -->
+                            <div class="modal fade" id="deleteBookModal{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel{{ book.id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete this book?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <a href="{{ url_for('delete_book', book_id=book.id) }}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
