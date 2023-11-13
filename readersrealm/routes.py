@@ -6,7 +6,7 @@ from flask import(
     flash,
     session)
 from readersrealm import app, db, mail
-from readersrealm.models import User, Author, Book, Review
+from readersrealm.models import User, Author, Book, Review, Genre
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 import re, os
@@ -108,6 +108,7 @@ def logout():
 def browse_books():
     books = Book.query.all()
     return render_template('browse-books.html', books=books)
+   
 
 
 @app.route('/add_book')
@@ -165,6 +166,9 @@ def add_book_form():
         return redirect(url_for('browse_books')) 
 
     return render_template('add-book.html')  # Render the book entry form
+
+
+
 
 
 @app.route('/edit_book/<int:book_id>', methods=['GET', 'POST'])
@@ -333,7 +337,7 @@ def contact():
 
         try:
             # Check if running in development mode
-            if os.environ.get("DEVELOPMENT") == "True":
+            if os.environ.get("DEBUG") == "True":
                 # Print email details for debugging in development
                 print("DEBUG - Email details:")
                 print("Subject:", subject)
@@ -349,3 +353,21 @@ def contact():
         return redirect(url_for("index"))
 
     return render_template("contact.html")
+
+
+@app.route('/search', methods=['POST'])
+def search():
+    search_query = request.form.get('search')
+
+    # Perform the search in the database.
+    if search_query:
+        search_results = Book.query.filter(
+            (Book.title.ilike(f"%{search_query}%")) |
+            (Book.description.ilike(f"%{search_query}%")) |
+            (Author.name.ilike(f"%{search_query}%"))
+        ).all()
+    else:
+        # Displays results as none if an empty string
+        search_results = []
+
+    return render_template('search.html', search_results=search_results)

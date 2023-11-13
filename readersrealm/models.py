@@ -57,3 +57,4 @@ class Review(db.Model):
     review_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     user = db.relationship('User', backref='user_reviews')
     book = db.relationship('Book', backref='user_reviews')
+    
