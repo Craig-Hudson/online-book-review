@@ -59,7 +59,7 @@ def register_post():
 
         # Create a new user record
         new_user = User(username=username, email=email, password=password_hash,
-                         password_confirmation=password_hash)  # Store the hashed password
+                        password_confirmation=password_hash)
 
         # Add the new user record to the database
         db.session.add(new_user)
@@ -113,6 +113,14 @@ def browse_books():
 
 @app.route('/add_book')
 def add_book():
+    # Check if a user is logged in
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        # User is not logged in, redirect to the login page
+        return redirect(url_for('login'))
+
+    # User is logged in, render the 'add-book.html' template
     return render_template('add-book.html')
 
 
@@ -364,8 +372,9 @@ def search():
         search_results = Book.query.filter(
             (Book.title.ilike(f"%{search_query}%")) |
             (Book.description.ilike(f"%{search_query}%")) |
-            (Author.name.ilike(f"%{search_query}%"))
-        ).all()
+            (Author.name.ilike(f"%{search_query}%")) |
+            (Book.publication_year == int(search_query))
+).all()
     else:
         # Displays results as none if an empty string
         search_results = []
