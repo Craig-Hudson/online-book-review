@@ -206,43 +206,56 @@ def edit_book(book_id):
 
 @app.route('/delete_book/<int:book_id>', methods=['GET', 'POST'])
 def delete_book(book_id):
-  # Retrieve the book from the database
-  book = Book.query.get(book_id)
-
-  if book:
-    # Check if the logged-in user is the owner of the book
-    if 'user_id' in session and session['user_id'] == book.user_id:
-      # Delete the book from the database
-      db.session.delete(book)
-      db.session.commit()
-      flash('Book deleted successfully!', 'success')
-    else:
-      flash('You are not authorized to delete this book.', 'error')
-
-  # Redirect back to the profile
-  return redirect(url_for('profile', username=session.get('username')))
-
-
-
-
-@app.route('/reviews/<book_id>', methods=['GET'])
-def reviews(book_id):
+    # Retrieve the book from the database
     book = Book.query.get(book_id)
+    if book is None:
+            flash('Book not found.', 'error')
+            return render_template('404.html', error='Book not found'), 404
+
+    if book:
+        # Check if the logged-in user is the owner of the book
+        if 'user_id' in session and session['user_id'] == book.user_id:
+            # Delete the book from the database
+            db.session.delete(book)
+            db.session.commit()
+            flash('Book deleted successfully!', 'success')
+        else:
+            flash('You are not authorized to delete this book.', 'error')
+
+    # Redirect back to the profile
+    return redirect(url_for('profile', username=session.get('username')))
+
+
+
+@app.route('/reviews/<book_id>', methods=["GET", "POST"])
+def reviews(book_id):
+    
+    book = Book.query.get(book_id)
+    if book is None:
+        flash('Book not found.', 'error')
+        return render_template('404.html', error='Book not found'), 404
+    
     reviews = Review.query.filter_by(book_id=book.id).all()
-    print("Book ID:", book_id)
-    print("Book:", book)
-    print("Reviews:", reviews)
 
     return render_template('reviews.html', book=book, reviews=reviews)
 
 
+from flask import redirect, url_for, render_template
+
 @app.route('/add_review/<book_id>', methods=['GET', 'POST'])
 def add_review(book_id):
-    book = Book.query.get(book_id)   
+    # Check if the user is logged in
+    user_id = session.get('user_id')
 
     if 'user_id' not in session:
+        session['login_required'] = True  # Set the login_required flag
         flash('Please log in to add a review.', 'error')
         return redirect(url_for('login'))
+
+    book = Book.query.get(book_id) 
+    if book is None:
+        flash('Book not found.', 'error')
+        return render_template('404.html', error='Book not found'), 404
 
     if request.method == 'POST':
         user_id = session['user_id']  # Get the user's ID from the session
@@ -255,19 +268,33 @@ def add_review(book_id):
         db.session.commit()
 
         flash('Review added successfully!', 'success')
+
+        # Redirect to the reviews page after adding the review
         return redirect(url_for('reviews', book_id=book_id))
 
     return render_template('add-review.html', book_id=book_id, book=book)
 
 
+
+
+
+
 @app.route('/edit_review/<int:review_id>', methods=['GET', 'POST'])
 def edit_review(review_id):
+    # Check if the user is logged in
+    if 'user_id' not in session:
+        flash('Please log in to edit a review.', 'error')
+        return redirect(url_for('login'))
+
     review = Review.query.get(review_id)
     if review is None:
         flash('Review not found.', 'error')
-        return redirect(url_for('index'))
+        return render_template('404.html', error='Review not found'), 404
     
     book = Book.query.get(review.book_id)
+    if book is None:
+        flash('Book not found.', 'error')
+        return render_template('404.html', error='Book not found'), 404
 
     if request.method == 'POST':
         # Handle the form submission with the updated review data
@@ -289,6 +316,9 @@ def edit_review(review_id):
 @app.route('/delete_review/<int:review_id>')
 def delete_review(review_id):
     review = Review.query.get(review_id)
+    if not review:
+        return not_found_error(404)
+    
     user = None  # Initialize user to None
 
     if review:
@@ -313,6 +343,8 @@ def delete_review(review_id):
 def profile(username):
     if session.get('username'):
         current_username = session['username']
+        if not current_username:
+            return render_template('404.html')
         if username == current_username:
             user = User.query.filter_by(username=username).first()
             if user:
@@ -369,14 +401,27 @@ def search():
 
     # Perform the search in the database.
     if search_query:
-        search_results = Book.query.filter(
-            (Book.title.ilike(f"%{search_query}%")) |
-            (Book.description.ilike(f"%{search_query}%")) |
-            (Author.name.ilike(f"%{search_query}%")) |
-            (Book.publication_year == int(search_query))
-).all()
+        try:
+            search_results = Book.query.join(Author).filter(
+                (Book.title.ilike(f"%{search_query}%")) |
+                (Book.description.ilike(f"%{search_query}%")) |
+                (Author.name.ilike(f"%{search_query}%")) |
+                (Book.publication_year == int(search_query))
+            ).all()
+        except ValueError:
+            # Handle the case where search_query is not a valid integer
+            search_results = Book.query.join(Author).filter(
+                (Book.title.ilike(f"%{search_query}%")) |
+                (Book.description.ilike(f"%{search_query}%")) |
+                (Author.name.ilike(f"%{search_query}%"))
+            ).all()
     else:
         # Displays results as none if an empty string
         search_results = []
 
     return render_template('search.html', search_results=search_results)
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html', error=error), 404
