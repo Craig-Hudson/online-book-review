@@ -1,18 +1,20 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
+            <h1 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h1>
             <div class="card mt-4">
                 {% if book.image_url == "not-available.webp" %}
-                <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
+                    <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
                 {% else %}
-                <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}" />
+                    <img class="card-img-top review-image" src="{{ book.image_url }}" alt="{{ book.title }}" />
                 {% endif %}
-
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ book.title }}</h5>
-                    <p class="card-text">{{ book.description }}</p>
+                    <hr>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Description:</strong> {{ book.description }}</li>
                         <li class="list-group-item"><strong>Author:</strong> {{ book.author.name }}</li>
                         <li class="list-group-item"><strong>Genre:</strong> {{ book.genre }}</li>
                         <li class="list-group-item"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
@@ -23,11 +25,12 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addReviewModal">
-                Add Review
-            </button>
+        <div class="col-md-6 offset-md-3 d-flex justify-content-center">
+            {% if not session.get('user_id') %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
+            {% else %}
+                <a href="{{ url_for('add_review', book_id=book.id) }}" class="btn btn-success">Add Review</a>
+            {% endif %}
         </div>
     </div>
 
@@ -36,7 +39,7 @@
             <h2>Reviews:</h2>
             <ul class="list-group">
                 {% for review in reviews %}
-                <li class="list-group-item mb-3">
+                <li class="list-group-item mb-2"> {# Adjusted margin here #}
                     <p><strong>Rating:</strong> {{ review.rating }}</p>
                     <p><strong>Review Date:</strong> {{ review.review_date.strftime("%d-%m-%y %H:%M:%S") }}</p>
                     <p><strong>Comment:</strong> {{ review.comment }}</p>
@@ -45,28 +48,28 @@
             </ul>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="addReviewModal" tabindex="-1" role="dialog" aria-labelledby="addReviewModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addReviewModalLabel">Login Required</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>You need to be logged in to add a review.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!-- Button to navigate to the login page -->
-                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+    <!-- Bootstrap Modal to display if the user is not logged in when clicking add review -->
+    <div class="modal fade" id="addReviewModal" tabindex="-1" role="dialog" aria-labelledby="addReviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addReviewModalLabel">Login Required</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>You need to be logged in to add a review.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- Button to navigate to the login page -->
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                </div>
             </div>
         </div>
     </div>
+    
 </div>
-
 {% endblock %}
