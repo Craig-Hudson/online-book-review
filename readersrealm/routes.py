@@ -26,7 +26,7 @@ def index():
 def register():
     return render_template('register.html')
 
-# Define a route for processing the registration form
+
 @app.route('/register_post', methods=['GET', 'POST'])
 def register_post():
     if request.method == "POST":
@@ -97,7 +97,6 @@ def login():
     return render_template("login.html")
 
 
-
 @app.route('/logout')
 def logout():
     session.clear()  # Clear all session data
@@ -109,7 +108,6 @@ def browse_books():
     books = Book.query.all()
     return render_template('browse-books.html', books=books)
    
-
 
 @app.route('/add_book')
 def add_book():
@@ -132,12 +130,12 @@ def add_book_form():
     then add all the details associated with the book to the database
     """
     if request.method == 'POST':
-        title = request.form['title']
-        author_name = request.form['author_name']  # User-provided author name
-        description = request.form['description']
-        publication_year = request.form['publication_year']
-        image_url= request.form['image_url']
-        genre = request.form['genre']
+        title = request.form.get('title')
+        author_name = request.form.get('author_name')  # User-provided author name
+        description = request.form.get('description')
+        publication_year = request.form.get('publication_year')
+        image_url= request.form.get('image_url')
+        genre = request.form.get('genre')
 
         # Check if the author already exists in the database
         author = Author.query.filter_by(name=author_name).first()
@@ -176,16 +174,18 @@ def add_book_form():
     return render_template('add-book.html')  # Render the book entry form
 
 
-
-
-
 @app.route('/edit_book/<int:book_id>', methods=['GET', 'POST'])
 def edit_book(book_id):
+    # Checks if user is in session, if not redirect to login page.
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('You must be logged in to edit a book', 'error')
+        return redirect('login')
+    
     book = Book.query.get(book_id)
 
-    if book is None:
-        flash('Book not found.', 'error')
-        return redirect(url_for('index'))
+    if book_id is None:
+        return redirect(url_for('404'))
 
     if request.method == 'POST':
         # Handle the form submission with the updated book data
@@ -373,11 +373,11 @@ def contact():
         subject = f"Contact form submission from {name}"
         body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
 
-        msg = Message(subject, recipients=["craighudson1211@gmail.com"], body=body)
+        msg = Message(subject, recipients=["readersrealmproject@gmail.com"], body=body)
 
         try:
             # Check if running in development mode
-            if os.environ.get("DEBUG") == "True":
+            if os.environ.get("DEVELOPMENT") == "True":
                 # Print email details for debugging in development
                 print("DEBUG - Email details:")
                 print("Subject:", subject)
