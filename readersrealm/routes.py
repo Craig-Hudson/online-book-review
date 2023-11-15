@@ -5,9 +5,8 @@ from flask import(
     url_for,
     flash,
     session)
-from readersrealm import app, db, mail
+from readersrealm import app, db
 from readersrealm.models import User, Author, Book, Review, Genre
-from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 import re, os
 
@@ -369,30 +368,14 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-
-        subject = f"Contact form submission from {name}"
-        body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
-
-        msg = Message(subject, recipients=["readersrealmproject@gmail.com"], body=body)
-
-        try:
-            # Check if running in development mode
-            if os.environ.get("DEVELOPMENT") == "True":
-                # Print email details for debugging in development
-                print("DEBUG - Email details:")
-                print("Subject:", subject)
-                print("Body:", body)
-            else:
-                # Send actual email when not in development
-                mail.send(msg)
-                flash("Your message has been sent successfully!", "success")
-        except Exception as e:
-            print(f"Error sending email: {e}")
-            flash("An error occurred while sending the email. Please try again later.", "error")
-
-        return redirect(url_for("index"))
+        return redirect('thankyou')
 
     return render_template("contact.html")
+
+
+@app.route('/thankyou')
+def thankyou():
+    return render_template('thankyou.html')
 
 
 @app.route('/search', methods=['POST'])
