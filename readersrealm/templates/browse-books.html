@@ -9,7 +9,7 @@
         </button>
     {% else %}
         <!-- If the user is logged in, show a different button or any other content -->
-        <a href="{{ url_for('add_book') }}" class="btn btn-success">Add Book</a>
+        <a href="{{ url_for('add_book') }}" class="btn btn-dark border border-white btn-lg">Add Book</a>
     {% endif %}
 </div>
 
@@ -47,14 +47,14 @@
                 <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}" />
                 {% endif %}
 
-                <div class="card-body bg-dark">
+                <div class="card-body bg-dark border border-white">
                     <h5 class="card-title text-center text-white">{{ book.title }}</h5>
-                    <p class="card-text">{{ book.description }}</p>
+                    <p class="card-text"><strong>Description:</strong> {{ book.description }}</p>
                 </div>
                 <ul class="list-group list-group-flush bg-dark">
-                    <li class="list-group-item bg-dark"><strong>Author:</strong> {{ book.author.name }}</li>
-                    <li class="list-group-item bg-dark"><strong>Genre:</strong> {{ book.genre }}</li>
-                    <li class="list-group-item bg-dark"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
+                    <li class="list-group-item bg-dark border border-white"><strong>Author:</strong> {{ book.author.name }}</li>
+                    <li class="list-group-item bg-dark border border-white"><strong>Genre:</strong> {{ book.genre }}</li>
+                    <li class="list-group-item bg-dark border border-white"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
                 </ul>
                 <div class="card-body">
                     <a href="{{ url_for('reviews', book_id=book.id) }}" class="btn btn-primary btn-block">View Reviews</a>

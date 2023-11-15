@@ -5,7 +5,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: pointer;
     font-family: sans-serif;
 }
 
@@ -64,6 +63,9 @@ main {
     padding-bottom: 110px;
 }
 
+a {
+    cursor: pointer;
+}
 
 .bg-image{
     background: url(../images/pexels-stanislav-kondratiev.webp) no-repeat center center / cover;

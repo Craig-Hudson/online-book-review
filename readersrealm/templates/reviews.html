@@ -2,22 +2,22 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h1 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h1>
-            <div class="card mt-4">
+        <div class="col-md-6 offset-md-3 border border-white bg-dark mt-5">
+            <h3 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h3>
+            <div class="card mt-4 bg-dark">
                 {% if book.image_url == "not-available.webp" %}
                     <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
                 {% else %}
                     <img class="card-img-top review-image" src="{{ book.image_url }}" alt="{{ book.title }}" />
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{ book.title }}</h5>
+                    <!-- <h5 class="card-title text-center">{{ book.title }}</h5> -->
                     <hr>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Description:</strong> {{ book.description }}</li>
-                        <li class="list-group-item"><strong>Author:</strong> {{ book.author.name }}</li>
-                        <li class="list-group-item"><strong>Genre:</strong> {{ book.genre }}</li>
-                        <li class="list-group-item"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
+                    <ul class="list-group list-group-flush border border-white text-white">
+                        <li class="list-group-item bg-dark border border-white"><strong>Description:</strong> {{ book.description }}</li>
+                        <li class="list-group-item bg-dark border border-white"><strong>Author:</strong> {{ book.author.name }}</li>
+                        <li class="list-group-item bg-dark border border-white"><strong>Genre:</strong> {{ book.genre }}</li>
+                        <li class="list-group-item bg-dark border border-white"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
                     </ul>
                 </div>
             </div>
@@ -27,19 +27,19 @@
     <div class="row mt-4">
         <div class="col-md-6 offset-md-3 d-flex justify-content-center">
             {% if not session.get('user_id') %}
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
             {% else %}
-                <a href="{{ url_for('add_review', book_id=book.id) }}" class="btn btn-success">Add Review</a>
+                <a href="{{ url_for('add_review', book_id=book.id) }}" class="btn btn-dark btn-lg"><strong>Add Review</strong></a>
             {% endif %}
         </div>
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6 offset-md-3 bg-dark text-white">
             <h2>Reviews:</h2>
             <ul class="list-group">
                 {% for review in reviews %}
-                <li class="list-group-item mb-2"> {# Adjusted margin here #}
+                <li class="list-group-item mb-2 bg-dark text-white border border-white"> {# Adjusted margin here #}
                     <p><strong>Rating:</strong> {{ review.rating }}</p>
                     <p><strong>Review Date:</strong> {{ review.review_date.strftime("%d-%m-%y %H:%M:%S") }}</p>
                     <p><strong>Comment:</strong> {{ review.comment }}</p>
