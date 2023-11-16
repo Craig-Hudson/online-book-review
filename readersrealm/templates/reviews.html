@@ -27,9 +27,9 @@
     <div class="row mt-4">
         <div class="col-md-6 offset-md-3 d-flex justify-content-center">
             {% if not session.get('user_id') %}
-                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
             {% else %}
-                <a href="{{ url_for('add_review', book_id=book.id) }}" class="btn btn-dark btn-lg"><strong>Add Review</strong></a>
+                <a href="{{ url_for('add_review', book_id=book.id) }}" class="btn btn-primary btn-lg"><strong>Add Review</strong></a>
             {% endif %}
         </div>
     </div>
