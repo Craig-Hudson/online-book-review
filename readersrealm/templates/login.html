@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container register-form">
     <div class="col-md-6 offset-md-3">
-        <div class="card card-body">
+        <div class="card card-body bg-dark border border-white text-white">
             <h1 class="text-center">Login</h1>
             <form action="{{ url_for('login') }}" method="post">
                 <div class="form-group">
@@ -29,7 +29,9 @@
                         </ul>
                     {% endif %}
                 {% endwith %}
-                <button type="submit" class="btn btn-primary">Log in</button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
             </form>
         </div>
     </div>

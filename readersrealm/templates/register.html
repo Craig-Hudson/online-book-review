@@ -2,7 +2,7 @@
 
 <div class="container register-form">
     <div class="col-md-6 offset-md-3">
-        <div class="card card-body">
+        <div class="card card-body bg-dark border border-white text-white mt-2">
             <h1 class="text-center">Register</h1>
 
         <form action="{{ url_for('register_post') }}" method="POST">
@@ -17,6 +17,11 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required />
+                    <ul class="list-group mt-2">
+                        <li class="ml-3">Your password must contain a minimum of 8 characters.</li>
+                        <li class="ml-3">Your password must contain a number.</li>
+                        <li class="ml-3">Your password must contain a special character.</li>
+                    </ul>
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation">Password Confirmation</label>
@@ -35,8 +40,9 @@
                 {% if 'Password must meet requirements' in messages %}
                   <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
                 {% endif %}
-
-                <button type="submit" class="btn btn-primary">Register</button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
             </form>
         </div>
     </div>
