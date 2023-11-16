@@ -364,18 +364,8 @@ def profile(username):
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    if request.method == 'POST':
-        name = request.form.get("name")
-        email = request.form.get("email")
-        message = request.form.get("message")
-        return redirect('thankyou')
-
     return render_template("contact.html")
 
-
-@app.route('/thankyou')
-def thankyou():
-    return render_template('thankyou.html')
 
 
 @app.route('/search', methods=['POST'])
