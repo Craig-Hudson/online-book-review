@@ -26,15 +26,16 @@
                             <p><strong>Rating:</strong> {{ review.rating }}</p>
                             <p><strong>Review:</strong> {{ review.comment }}</p>
                             <div class="d-flex justify-content-around">
-                                <a href="{{ url_for('edit_review', username=user.username, review_id=review.id) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ url_for('edit_review', username=user.username, review_id=review.id) }}" aria-label="Edit Review" class="btn btn-primary">Edit</a>
                                 <!-- Delete Review Modal Trigger Button -->
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteReviewModal{{ review.id }}">
                                     Delete
                                 </button>
+
                                 <!-- Delete Review Modal -->
                                 <div class="modal fade" id="deleteReviewModal{{ review.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteReviewModalLabel{{ review.id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
+                                        <div class="modal-content bg-dark text-white">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -76,15 +77,16 @@
                             <h5 class="card-title text-center">{{ book.title }}</h5>
                         </div>
                         <div class="card-footer d-flex justify-content-around">
-                            <a href="{{ url_for('edit_book', username=user.username, book_id=book.id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ url_for('edit_book', username=user.username, book_id=book.id) }}" class="btn btn-primary" aria-label="Edit Book">Edit</a>
                             <!-- Delete Book Modal Trigger Button -->
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteBookModal{{ book.id }}">
                                 Delete
                             </button>
+                            
                             <!-- Delete Book Modal -->
                             <div class="modal fade" id="deleteBookModal{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel{{ book.id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
+                                    <div class="modal-content bg-dark text-white">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -9,7 +9,7 @@
         </button>
     {% else %}
         <!-- If the user is logged in, show a different button or any other content -->
-        <a href="{{ url_for('add_book') }}" class="btn btn-primary btn-lg">Add Book</a>
+        <a href="{{ url_for('add_book') }}" aria-label="Add book page" class="btn btn-primary btn-lg">Add Book</a>
     {% endif %}
 </div>
 
@@ -29,7 +29,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <!-- Button to navigate to the login page -->
-                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                <a href="{{ url_for('login') }}" aria-label="Login Page" class="btn btn-primary">Login</a>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
                     <li class="list-group-item bg-dark border border-white"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
                 </ul>
                 <div class="card-body">
-                    <a href="{{ url_for('reviews', book_id=book.id) }}" class="btn btn-primary btn-block">View Reviews</a>
+                    <a href="{{ url_for('reviews', book_id=book.id) }}" aria-label="Review page" class="btn btn-primary btn-block">View Reviews</a>
                 </div>
             </div>
         </div>
