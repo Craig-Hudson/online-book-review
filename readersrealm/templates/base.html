@@ -30,28 +30,28 @@
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" aria-label="Home page" href="{{ url_for('index') }}">Home</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page == 'index' %} active {% endif %}" aria-label="Home page" href="{{ url_for('index') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Browse books page" href="{{ url_for('browse_books') }}">Browse Books</a>
+                            <a class="nav-link {% if active_page == 'browse_books' %} active {% endif %}" aria-label="Browse books page" href="{{ url_for('browse_books') }}">Browse Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Contact page" href="{{ url_for('contact') }}">Contact</a>
+                            <a class="nav-link {% if active_page == 'contact' %} active {% endif %}" aria-label="Contact page" href="{{ url_for('contact') }}">Contact</a>
                         </li>
                         {% if session['logged_in'] %}
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Profile page" href="{{ url_for('profile', username=session['username']) }}">Profile</a>
+                            <a class="nav-link {% if active_page == 'profile' %} active {% endif %}" aria-label="Profile page" href="{{ url_for('profile', username=session['username']) }}">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-label="Logout" href="{{ url_for('logout') }}">Log Out</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Login page" href="{{ url_for('login') }}">Login</a>
+                            <a class="nav-link {% if active_page == 'login' %} active {% endif %}" aria-label="Login page" href="{{ url_for('login') }}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Register page" href="{{ url_for('register') }}">Register</a>
+                            <a class="nav-link {% if active_page == 'register' %} active {% endif %}" aria-label="Register page" href="{{ url_for('register') }}">Register</a>
                         </li>
                         {% endif %}
                     </ul>
