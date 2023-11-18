@@ -16,27 +16,49 @@ password_pattern = r'^(?=.*[0-9])(?=.*[!@#$%^&*()_+|~=\-\\[\];\',./{}:<>?])([A-Z
 def is_valid_password(password):
     return re.match(password_pattern, password) is not None
 
+
 @app.route("/")
 def index():
-    return render_template("index.html")
+    """
+    Function to render the index html page 
+    """
+    active_page = 'index'
+    return render_template("index.html", active_page=active_page)
 
 # Define a route for the registration page
 @app.route('/register')
 def register():
-    return render_template('register.html')
+    """
+    Function to render the register html page 
+    """
+    active_page = 'register'
+    return render_template('register.html', active_page=active_page)
 
 
 @app.route('/register_post', methods=['GET', 'POST'])
 def register_post():
+    """ 
+    Function for users to register to the website
+    get the input from the form,
+    then check to see if the password is valid using the is valid password function,
+    and display message to inform user,then check if the password and password confirmation match,
+    then check if the username or email is already in use, if so flash message to inform user.
+    Then create a variable that will store a hashed password to go into the database,
+    then send users details to be stored in the database
+    """
     if request.method == "POST":
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
         password_confirmation = request.form.get('password_confirmation')
-        print("Form Data:", request.form)
 
         if not is_valid_password(password):
             flash("Password must be at least 8 characters long and contain 1 number and 1 special character.", 'error')
+            return render_template('register.html')
+        
+        # Error handling to check weather the password and password confirmation match.
+        if password != password_confirmation:
+            flash('Passwords do not match.', 'error')
             return render_template('register.html')
 
         # Check if the username and email are already in use
@@ -48,11 +70,6 @@ def register_post():
             flash('Username or email already in use.', 'error')
             return render_template('register.html')
         
-        # Error handling to check weather the password and password confirmation match.
-        if password != password_confirmation:
-            flash('Passwords do not match.', 'error')
-            return render_template('register.html')
-
         # Hash the password before storing it in the database
         password_hash = generate_password_hash(password)
 
@@ -77,6 +94,7 @@ def login():
     also using error handling to ensure the user has entered the correct
     username and password
     """
+    active_page = 'login'
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
@@ -93,23 +111,36 @@ def login():
             # Invalid login
             flash('Invalid username or password. Please try again.', 'error')
 
-    return render_template("login.html")
+    return render_template("login.html", active_page=active_page)
 
 
 @app.route('/logout')
 def logout():
+    """ 
+    Function to clear all session data to log out the user,
+    and redirect them to home page
+    """
     session.clear()  # Clear all session data
     return redirect(url_for('index'))
 
 
 @app.route('/browse_books')
 def browse_books():
+    """ 
+    Function that will display all the books that users have entered into the database.
+    """
+    active_page = 'browse_books'
     books = Book.query.all()
-    return render_template('browse-books.html', books=books)
+    return render_template('browse-books.html', books=books, active_page=active_page)
    
 
 @app.route('/add_book')
 def add_book():
+    """ 
+    Function that will first store the users ID in a variable, and then check if 
+    the user is logged in, if not redirect user to login page, 
+    if user is logged in render the template for user to access
+    """
     # Check if a user is logged in
     user_id = session.get('user_id')
 
@@ -175,14 +206,18 @@ def add_book_form():
 
 @app.route('/edit_book/<int:book_id>', methods=['GET', 'POST'])
 def edit_book(book_id):
+    """ 
+    Function to allow users to edit books they've added
+    first check if user is logged in, then check if book still exists,
+    then check if the user id of the current user matches the user id in the book table,
+    and if it does commit changes to the database.
+    """
     # Checks if user is in session, if not redirect to login page.
     user_id = session.get('user_id')
     if not user_id:
-        flash('You must be logged in to edit a book', 'error')
         return redirect('login')
     
     book = Book.query.get(book_id)
-
     if book_id is None:
         return redirect(url_for('404'))
 
@@ -195,7 +230,9 @@ def edit_book(book_id):
         book.genre = request.form.get('genre')
         book.image_url = request.form.get('image_url')
 
-        db.session.commit()
+        # Check if user id matches user id in the books table
+        if user_id == book.user_id:
+            db.session.commit()
 
         flash('Book updated successfully!', 'success')
         return redirect(url_for('index'))
@@ -205,10 +242,14 @@ def edit_book(book_id):
 
 @app.route('/delete_book/<int:book_id>', methods=['GET', 'POST'])
 def delete_book(book_id):
+    """ 
+    Function to delete books.
+    Check if book exists and then check if user in session matches the 
+    user id in the book table then delete book from database
+    """
     # Retrieve the book from the database
     book = Book.query.get(book_id)
     if book is None:
-            flash('Book not found.', 'error')
             return render_template('404.html', error='Book not found'), 404
 
     if book:
@@ -217,9 +258,9 @@ def delete_book(book_id):
             # Delete the book from the database
             db.session.delete(book)
             db.session.commit()
-            flash('Book deleted successfully!', 'success')
-        else:
-            flash('You are not authorized to delete this book.', 'error')
+        #     flash('Book deleted successfully!', 'success')
+        # else:
+        #     flash('You are not authorized to delete this book.', 'error')
 
     # Redirect back to the profile
     return redirect(url_for('profile', username=session.get('username')))
@@ -228,10 +269,13 @@ def delete_book(book_id):
 
 @app.route('/reviews/<book_id>', methods=["GET", "POST"])
 def reviews(book_id):
-    
+    """ 
+    function to display reviews matched with the book's ID
+    check if the book exists first, if not 404, 
+    then query data base for reviews on that given book, and display on reviews page.
+    """
     book = Book.query.get(book_id)
     if book is None:
-        flash('Book not found.', 'error')
         return render_template('404.html', error='Book not found'), 404
     
     reviews = Review.query.filter_by(book_id=book.id).all()
@@ -239,21 +283,24 @@ def reviews(book_id):
     return render_template('reviews.html', book=book, reviews=reviews)
 
 
-from flask import redirect, url_for, render_template
 
 @app.route('/add_review/<book_id>', methods=['GET', 'POST'])
 def add_review(book_id):
+    """
+    Function for users to add reviews.
+    First check if users are logged in to add a review, then check if the book exists.
+    Then get the form data including getting the users ID and then add and commit to the database
+    """
     # Check if the user is logged in
     user_id = session.get('user_id')
 
     if 'user_id' not in session:
-        session['login_required'] = True  # Set the login_required flag
+        session['login_required'] = True 
         flash('Please log in to add a review.', 'error')
         return redirect(url_for('login'))
 
     book = Book.query.get(book_id) 
     if book is None:
-        flash('Book not found.', 'error')
         return render_template('404.html', error='Book not found'), 404
 
     if request.method == 'POST':
@@ -274,12 +321,15 @@ def add_review(book_id):
     return render_template('add-review.html', book_id=book_id, book=book)
 
 
-
-
-
-
 @app.route('/edit_review/<int:review_id>', methods=['GET', 'POST'])
 def edit_review(review_id):
+    """ 
+    Function to allow users to edit reviews 
+    if user isn't logged in, get user to log in
+    check if the review and book exists, if not 404.
+    if review form is posted check is user id matches the user id 
+    in the review table, then commit new details of the review to the database.
+    """
     # Check if the user is logged in
     if 'user_id' not in session:
         flash('Please log in to edit a review.', 'error')
@@ -287,26 +337,27 @@ def edit_review(review_id):
 
     review = Review.query.get(review_id)
     if review is None:
-        flash('Review not found.', 'error')
-        return render_template('404.html', error='Review not found'), 404
+        return not_found_error(404)
     
     book = Book.query.get(review.book_id)
     if book is None:
-        flash('Book not found.', 'error')
-        return render_template('404.html', error='Book not found'), 404
+       return not_found_error(404)
 
     if request.method == 'POST':
         # Handle the form submission with the updated review data
         new_rating = request.form.get('rating')
         new_comment = request.form.get('comment')
         
-        # Update the review in the database with the new data
-        review.rating = new_rating
-        review.comment = new_comment
-        db.session.commit()
+        user_id = session.get('user_id')
+        if user_id == review.user_id:
+
+            # Update the review in the database with the new data
+            review.rating = new_rating
+            review.comment = new_comment
+            db.session.commit()
         
-        flash('Review updated successfully!', 'success')
-        return redirect(url_for('index'))
+        # flash('Review updated successfully!', 'success')
+        return redirect(url_for('reviews', book_id=book.id))
     
     return render_template('edit-review.html', review=review, book=book, review_id=review_id)
 
@@ -314,43 +365,55 @@ def edit_review(review_id):
 
 @app.route('/delete_review/<int:review_id>')
 def delete_review(review_id):
+    """
+    Function to delete reviews, if no review found send 404 error.
+    Then check is the current logged in user id matches the 
+    user id of the review, and if so delete review from database.
+    Then direct user back to their profile page.
+
+    """
     review = Review.query.get(review_id)
     if not review:
         return not_found_error(404)
-    
-    user = None  # Initialize user to None
 
-    if review:
+    # Retrieve the current user's ID from the session
+    user_id = session.get('user_id')
+    if user_id == review.user_id:
+
         db.session.delete(review)
         db.session.commit()
 
-      
-        user = User.query.get(review.user_id)
+    flash('Review deleted successfully.', 'success')
 
-    if user:
-        # Render the template with the user variable
-        return render_template('profile.html', user=user, review_deleted=True)
-    else:
-        flash('User not found.', 'error')
-
-    # Review not found or user not found
-    flash('Review not found or user not found.', 'error')
-    return redirect(url_for('profile'))  # Redirect to the profile without a specific username
+    # Redirect to the profile of the user
+    return redirect(url_for('profile', username=session.get('username')))
 
 
 @app.route('/profile/<username>')
 def profile(username):
+    """
+    Render the user profile page.
+    if not a current user and someone tries to access profiles, 404 error page
+    If the user is not logged in, they are redirected to the login page with an error message.
+    If the requested username matches the session username, the user's profile is displayed.
+    If the requested username does not match the session username, an unauthorized access error is flashed.
+    If the requested username does not exist, a user not found error is flashed.
+    """
+    active_page = 'profile'
+    # Get session username
     if session.get('username'):
         current_username = session['username']
+        # If current user tries accessing profiles send to 404
         if not current_username:
             return render_template('404.html')
         if username == current_username:
             user = User.query.filter_by(username=username).first()
+            # If user ID's match review and books ID's display on users profile
             if user:
                 review_ids = [review.id for review in Review.query.filter_by(user_id=user.id).all()]
                 reviews = Review.query.filter_by(user_id=user.id).all()
                 books = Book.query.filter_by(user_id=user.id).all()
-                return render_template('profile.html', user=user, reviews=reviews, books=books, review_ids=review_ids)
+                return render_template('profile.html', active_page=active_page, user=user, reviews=reviews, books=books, review_ids=review_ids)
             else:
                 flash('User not found.', 'error')
                 return redirect(url_for('index'))
@@ -364,12 +427,22 @@ def profile(username):
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return render_template("contact.html")
+    """
+    Function to render the contact.html page 
+    """
+    active_page = 'contact'
+    return render_template("contact.html", active_page=active_page)
 
 
 
 @app.route('/search', methods=['POST'])
 def search():
+    """
+    Function to get the form data in the search bar
+    which will then display the results of the search
+    on a search page, if no results are found, the users
+    will be informed
+    """
     search_query = request.form.get('search')
 
     # Perform the search in the database.
@@ -397,4 +470,7 @@ def search():
 
 @app.errorhandler(404)
 def not_found_error(error):
+    """
+    Function to render the 404 html page 
+    """
     return render_template('404.html', error=error), 404
