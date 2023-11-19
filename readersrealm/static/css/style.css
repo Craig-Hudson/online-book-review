@@ -141,6 +141,7 @@ footer {
     border-bottom: none;
 }
 
+
 /* Mobile media queries */
 @media screen and (max-width: 320px) {
     .register-form {
@@ -153,9 +154,19 @@ footer {
     .register-form {
         height: 60vh;
     }
+
+    html {
+        font-size: 80%!important;
+    }
 }
 
 
 /* tablet media queries */
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 85%!important;
+    }
+}
 
-
+/* larger screen */
+ 

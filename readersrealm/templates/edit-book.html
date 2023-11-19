@@ -41,11 +41,13 @@
                 </div>
                 <div class="form-group">
                     <label for="image_url">Image URL</label>
-                    <input type="text" class="form-control" id="image_url" name="image_url" value="{{ book.image_url }}" />
+                    {% if book.image_url == "/static/images/not-available.webp" %}
+                        <input type="text" class="form-control" id="image_url" name="image_url" />
+                    {% else %}
+                        <input type="text" class="form-control" id="image_url" name="image_url" value="{{ book.image_url }}" />
+                    {% endif %}
                 </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Update Book</button>
-                </div>
+
             </form>
 
             {% with messages = get_flashed_messages() %}
