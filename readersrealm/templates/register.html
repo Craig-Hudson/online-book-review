@@ -5,7 +5,7 @@
         <div class="card card-body bg-dark border border-white text-white mt-2">
             <h1 class="text-center">Register</h1>
 
-        <form action="{{ url_for('register_post') }}" method="POST">
+            <form action="{{ url_for('register_post') }}" method="POST">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" class="form-control" id="username" name="username" required />
@@ -27,19 +27,19 @@
                     <label for="password_confirmation">Password Confirmation</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required />
                 </div>
-                {% with messages = get_flashed_messages() %} 
-                {% if messages %}
-                  <ul class="flashes alert alert-danger">
-                      {% for message in messages %}
-                      <li>{{ message }}</li>
-                      {% endfor %}
-                  </ul>
-                {% endif %} 
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class="flashes">
+                            {% for message in messages %}
+                                {% if 'success' in message.lower() %}
+                                    <li class="alert alert-success" role="alert">{{ message }}</li>
+                                {% else %}
+                                    <li class="alert alert-danger" role="alert">{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 {% endwith %}
-                <!-- Add a condition to display password requirements message -->
-                {% if 'Password must meet requirements' in messages %}
-                  <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
-                {% endif %}
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>
