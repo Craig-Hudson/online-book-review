@@ -15,6 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    background: url(../images/pexels-stanislav-kondratiev.webp) no-repeat center center / cover;
 }
 
 /* NAVIGATION */
@@ -67,9 +68,6 @@ a {
     cursor: pointer;
 }
 
-.bg-image{
-    background: url(../images/pexels-stanislav-kondratiev.webp) no-repeat center center / cover;
-}
 
 /* Featured Books */
 .feature-book-image {
@@ -143,10 +141,12 @@ footer {
 
 
 .btn-primary {
-    background-color: #cce5ff; /* Lighter blue color */
-    color: #004085; /* Darker text color for better contrast */
-    border: 1px solid #b8daff; /* Border in a slightly darker blue color */
+    background-color: #cce5ff;
+    color: #004085;
+    font-weight: bold;
+    border: 1px solid #b8daff; 
 }
+
 
 /* Mobile media queries */
 @media screen and (max-width: 320px) {
