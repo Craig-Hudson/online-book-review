@@ -17,7 +17,12 @@
 
                         <div class="card-body bg-dark">
                             <h5 class="card-title text-center text-white">{{ book.title }}</h5>
-                            <p class="card-text">{{ book.description }}</p>
+                            <p class="card-text">
+                                <strong>Description:</strong>
+                                <button type="button" class="btn btn-link text-white" data-toggle="modal" data-target="#descriptionModal{{ book.id }}">
+                                    Read More
+                                </button>
+                            </p>
                         </div>
                         <ul class="list-group list-group-flush bg-dark">
                             <li class="list-group-item bg-dark"><strong>Author:</strong> {{ book.author.name }}</li>
@@ -28,6 +33,27 @@
                             <a href="{{ url_for('reviews', book_id=book.id) }}" aria-label="Reviews page" class="btn btn-primary btn-block">View Reviews</a>
                         </div>
                     </div>
+
+                    <!-- Modal for Book Description -->
+                    <div class="modal fade" id="descriptionModal{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel{{ book.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content bg-dark text-white">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="descriptionModalLabel{{ book.id }}">Description</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="text-white">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{ book.description }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Modal for Book Description -->
                 </div>
             {% endfor %}
         </div>
