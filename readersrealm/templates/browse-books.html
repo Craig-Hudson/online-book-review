@@ -2,16 +2,16 @@
 
 {% block content %}
 <div class="page-title d-flex align-items-center flex-column flex-lg-row">
-    <h1 class="text-center mt-5 mb-5 flex-grow-1">Discover Your Next Favorite Book</h1>
+    <h1 class="text-center mt-5 mb-5 flex-grow-1 font-weight-bolder">Discover Your Next Favorite Book</h1>
     
     {% if not session.get('user_id') %}
         <!-- Add Book button with data-toggle and data-target attributes -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
             Add Book
         </button>
     {% else %}
         <!-- If the user is logged in, show a different button or any other content -->
-        <a href="{{ url_for('add_book') }}" aria-label="Add book page" class="btn btn-primary">Add Book</a>
+        <a href="{{ url_for('add_book') }}" aria-label="Add book page" class="btn btn-primary font-weight-bold">Add Book</a>
     {% endif %}
 </div>
 
@@ -64,7 +64,7 @@
                     <li class="list-group-item bg-dark border border-white"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
                 </ul>
                 <div class="card-body">
-                    <a href="{{ url_for('reviews', book_id=book.id) }}" aria-label="Review page" class="btn btn-primary btn-block">View Reviews</a>
+                    <a href="{{ url_for('reviews', book_id=book.id) }}" aria-label="Review page" class="btn btn-primary font-weight-bold btn-block">View Reviews</a>
                 </div>
             </div>
         </div>
