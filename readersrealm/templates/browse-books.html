@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="page-title d-flex align-items-center flex-column flex-lg-row">
-    <h1 class="text-center mt-5 mb-5 flex-grow-1 text-light font-weight-lighter">Discover Your Next Favorite Book</h1>
+    <h1 class="text-center mt-5 mb-5 flex-grow-1"><span class="bg-dark border rounded p-2">Discover Your Next Favorite Book</span></h1>
     
     {% if not session.get('user_id') %}
         <!-- Add Book button with data-toggle and data-target attributes -->
@@ -53,7 +53,7 @@
                     <h5 class="card-title text-center text-white">{{ book.title }}</h5>
                     <p class="card-text">
                         <strong>Description:</strong>
-                        <button type="button" class="btn btn-link text-white" data-toggle="modal" data-target="#descriptionModal{{ book.id }}">
+                        <button type="button" class="btn btn-link text-white pl-0" data-toggle="modal" data-target="#descriptionModal{{ book.id }}">
                             Read More
                         </button>
                     </p>
@@ -63,7 +63,7 @@
                     <li class="list-group-item bg-dark border border-white"><strong>Genre:</strong> {{ book.genre }}</li>
                     <li class="list-group-item bg-dark border border-white"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
                 </ul>
-                <div class="card-body">
+                <div class="card-footer">
                     <a href="{{ url_for('reviews', book_id=book.id) }}" aria-label="Review page" class="btn btn-primary font-weight-bold btn-block">View Reviews</a>
                 </div>
             </div>

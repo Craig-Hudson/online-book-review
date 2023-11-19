@@ -1,12 +1,13 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 
-<h1 class="text-center mt-2">Readers Realm</h1>
+<h1 class="text-center mt-3"><span class="bg-dark border rounded p-2">Readers Realm</span></h1>
 
 <div class="row mt-3 mb-3 text-white border-light d-flex justify-content-between">
     <div class="col-12 text-center">
-        <h2>Featured Books</h2>
+        <h2 class="mt-2"><span class="bg-dark border rounded p-2">Featured Books</span></h2>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mt-2">
         <div class="card mb-4 bg-dark custom-card h-100">
             <div class="d-flex justify-content-center">
                 <img src="{{ url_for('static', filename='images/book-cover1.webp') }}" class="feature-book-image"
@@ -14,13 +15,14 @@
             </div>
             <div class="card-body bg-dark">
                 <h3 class="card-title text-center text-white">The Bike Guy</h3>
-                <p class="card-text"><strong>Description:</strong> The Bike Guy is a young adult novel about a boy named
-                    Alex who loves bikes. He loves to ride them, fix them, and build them. One day, Alex finds a
-                    mysterious old bike in the woods. He takes it home and fixes it up, and soon he is
-                    racing it all over town.
-                </p>
             </div>
             <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark border-light">
+                    <strong>Description:</strong>
+                    <button type="button" class="btn btn-link text-white pl-0" data-toggle="modal" data-target="#descriptionModal1">
+                        Click Here
+                    </button>
+                </li>
                 <li class="list-group-item bg-dark border-light"><strong>Author:</strong> Emma Mayers</li>
                 <li class="list-group-item bg-dark border-light"><strong>Genre:</strong> Fiction</li>
                 <li class="list-group-item bg-dark border-light"><strong>Year:</strong> 2023</li>
@@ -28,19 +30,20 @@
         </div>
     </div>
 
-    <div class="col-md-6 card-margin">
+    <div class="col-md-6 card-margin mt-2">
         <div class="card mb-4 bg-dark custom-card h-100">
             <img src="{{ url_for('static', filename='images/book-cover2.webp') }}"
                 class=" text-center feature-book-image" alt="featured book - Create your own business">
             <div class="card-body bg-dark">
                 <h3 class="card-title text-center text-white">Create Your Own Business</h3>
-                <p class="card-text"><strong>Description:</strong> A captivating journey through the world of entrepreneurship
-                    and business, "Create Your Own Business" offers practical insights, expert advice,
-                    and real-life success stories. Learn how to turn your passion into profit
-                    and build a thriving enterprise from the ground up
-                </p>
             </div>
             <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark border-light">
+                    <strong>Description:</strong>
+                    <button type="button" class="btn btn-link text-white pl-0" data-toggle="modal" data-target="#descriptionModal2">
+                        Click Here
+                    </button>
+                </li>
                 <li class="list-group-item bg-dark border-light"><strong>Author:</strong> James Murdor</li>
                 <li class="list-group-item bg-dark border-light"><strong>Genre:</strong> Non-Fiction</li>
                 <li class="list-group-item bg-dark border-light"><strong>Publication Year:</strong> 2020</li>
@@ -73,5 +76,45 @@
       </div>
     </div>
   </section>
+
+<!-- Modal for Book Descriptions -->
+<div class="modal fade" id="descriptionModal1" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel1">The Bike Guy Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The Bike Guy is a young adult novel about a boy named Alex who loves bikes. He loves to ride them, fix them, and build them. One day, Alex finds a mysterious old bike in the woods. He takes it home and fixes it up, and soon he is racing it all over town.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Book Descriptions -->
+<div class="modal fade" id="descriptionModal2" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel2">Create Your Own Business Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>A captivating journey through the world of entrepreneurship and business, "Create Your Own Business" offers practical insights, expert advice, and real-life success stories. Learn how to turn your passion into profit and build a thriving enterprise from the ground up.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
