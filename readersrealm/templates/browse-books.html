@@ -6,12 +6,12 @@
     
     {% if not session.get('user_id') %}
         <!-- Add Book button with data-toggle and data-target attributes -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+        <button type="button" class="btn btn-primary button-small font-weight-bold" data-toggle="modal" data-target="#loginModal">
             Add Book
         </button>
     {% else %}
         <!-- If the user is logged in, show a different button or any other content -->
-        <a href="{{ url_for('add_book') }}" aria-label="Add book page" class="btn btn-primary font-weight-bold">Add Book</a>
+        <a href="{{ url_for('add_book') }}" aria-label="Add book page" class="btn btn-primary button-small font-weight-bold">Add Book</a>
     {% endif %}
 </div>
 

@@ -142,26 +142,13 @@ footer {
     border: 1px solid #b8daff; 
 }
 
-.rounded {
-    border-radius: 15px!important;
+.button-small {
+    padding: 2px;
+    font-size: 85%;
 }
 
-
-/* Mobile media queries */
-@media screen and (max-width: 320px) {
-    .browse-books-title {
-        font-size: 75%;
-    }
-} 
-
-@media screen and (max-width: 576px) {
-    .browse-books-title {
-        font-size: 120%;
-    }
-
-    html {
-        font-size: 80%!important;
-    }
+.rounded {
+    border-radius: 15px!important;
 }
 
 
@@ -174,9 +161,26 @@ footer {
     .browse-books-title {
         display: block;
         width: 100%;
-        font-size: 160%;
+        font-size: 160%!important;
     }
 }
+
+@media screen and (max-width: 576px) {
+    .browse-books-title {
+        font-size: 120%!important;
+    }
+
+    html {
+        font-size: 80%!important;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .browse-books-title {
+        font-size: 70%!important;
+    }
+} 
+
 
 /* larger screen */
  
