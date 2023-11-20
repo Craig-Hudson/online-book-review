@@ -149,11 +149,15 @@ footer {
 
 /* Mobile media queries */
 @media screen and (max-width: 320px) {
-    
+    .browse-books-title {
+        font-size: 75%;
+    }
 } 
 
 @media screen and (max-width: 576px) {
-    
+    .browse-books-title {
+        font-size: 120%;
+    }
 
     html {
         font-size: 80%!important;
@@ -165,6 +169,12 @@ footer {
 @media screen and (max-width: 768px) {
     html {
         font-size: 85%!important;
+    }
+
+    .browse-books-title {
+        display: block;
+        width: 100%;
+        font-size: 160%;
     }
 }
 
