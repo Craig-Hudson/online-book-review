@@ -7,49 +7,54 @@
     <div class="col-12 text-center">
         <h2 class="mt-2"><span class="bg-dark border rounded p-2">Featured Books</span></h2>
     </div>
+    {% for book in featured_books %}
     <div class="col-md-6 mt-2">
-        <div class="card mb-4 bg-dark custom-card h-100">
-            <div class="d-flex justify-content-center">
-                <img src="{{ url_for('static', filename='images/book-cover1.webp') }}" class="feature-book-image"
-                    alt=" Featured Book - The Bike Guy">
-            </div>
+        <div class="card mb-4 bg-dark custom-card">
+            <a href="{{ url_for('reviews', book_id=book.id) }}" class="d-flex justify-content-center">
+                {% if book.image_url %}
+                        <!-- Check if the book has its own image source in the database -->
+                        <img src="{{ book.image_url }}" class="card-img-top"  alt="{{ book.title }}">
+                    {% else %}
+                        <!-- If not, use a default image -->
+                        <img src="{{ url_for('static', filename='images/default-book-cover.webp') }}" class="card-img-top"  alt="{{ book.title }}">
+                    {% endif %}
+            </a>
             <div class="card-body bg-dark">
-                <h3 class="card-title text-center text-white">The Bike Guy</h3>
+                <h3 class="card-title text-center text-white">{{ book.title }}</h3>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dark border-light">
                     <strong>Description:</strong>
-                    <button type="button" class="btn btn-link text-white pl-0" data-toggle="modal" data-target="#descriptionModal1">
-                        Click Here
+                    <button type="button" class="btn btn-link text-white pl-0" data-toggle="modal" data-target="#descriptionModal{{ book.id }}">
+                        Read More
                     </button>
                 </li>
-                <li class="list-group-item bg-dark border-light"><strong>Author:</strong> Emma Mayers</li>
-                <li class="list-group-item bg-dark border-light"><strong>Genre:</strong> Fiction</li>
-                <li class="list-group-item bg-dark border-light"><strong>Year:</strong> 2023</li>
+                <li class="list-group-item bg-dark border-light"><strong>Author:</strong> {{ book.author.name }}</li>
+                <li class="list-group-item bg-dark border-light"><strong>Genre:</strong> {{ book.genre }}</li>
+                <li class="list-group-item bg-dark border-light"><strong>Year:</strong> {{ book.publication_year }}</li>
             </ul>
         </div>
     </div>
-
-    <div class="col-md-6 card-margin mt-2">
-        <div class="card mb-4 bg-dark custom-card h-100">
-            <img src="{{ url_for('static', filename='images/book-cover2.webp') }}"
-                class=" text-center feature-book-image" alt="featured book - Create your own business">
-            <div class="card-body bg-dark">
-                <h3 class="card-title text-center text-white">Create Your Own Business</h3>
+    <!-- Modal for Book Descriptions -->
+    <div class="modal fade" id="descriptionModal{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel{{ book.id }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="descriptionModalLabel{{ book.id }}">Description</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-white">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ book.description }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-dark border-light">
-                    <strong>Description:</strong>
-                    <button type="button" class="btn btn-link text-white pl-0" data-toggle="modal" data-target="#descriptionModal2">
-                        Click Here
-                    </button>
-                </li>
-                <li class="list-group-item bg-dark border-light"><strong>Author:</strong> James Murdor</li>
-                <li class="list-group-item bg-dark border-light"><strong>Genre:</strong> Non-Fiction</li>
-                <li class="list-group-item bg-dark border-light"><strong>Publication Year:</strong> 2020</li>
-            </ul>
         </div>
     </div>
+    {% endfor %}
 </div>
 
 <section id="about" class="container mt-4 mb-4">
@@ -65,30 +70,31 @@
             <p>That's why we created Readers Realm - to provide a space where book lovers can
                 come together to share their love of books. Here, you can find reviews
                 of all genres of books, from fiction to non-fiction, from classics to contemporary.
-                We highly recommend registering up to readers realm, where you be able ot unlock the
+                We highly recommend registering up to Readers Realm, where you'll be able to unlock the
                 ability to add/edit and or delete your own reviews, not to mention
-                 adding/editing and deleting your own books that you've added to readers realm.
+                adding/editing and deleting your own books that you've added to Readers Realm.
             </p>
         </div>
-        
-      <div class="col-md-6 d-flex align-items-stretch">
-        <img src="{{ url_for('static', filename='images/pexels-helena-lopes.webp') }}" alt="People reading and reviewing books" class="img-fluid">
-      </div>
+
+        <div class="col-md-6 d-flex align-items-stretch">
+            <img src="{{ url_for('static', filename='images/pexels-helena-lopes.webp') }}" alt="People reading and reviewing books" class="img-fluid">
+        </div>
     </div>
-  </section>
+</section>
 
 <!-- Modal for Book Descriptions -->
-<div class="modal fade" id="descriptionModal1" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel1" aria-hidden="true">
+{% for book in featured_books %}
+<div class="modal fade" id="descriptionModal{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel{{ book.id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="descriptionModalLabel1">The Bike Guy Description</h5>
+                <h5 class="modal-title" id="descriptionModalLabel{{ book.id }}">{{ book.title }} Description</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="text-white">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>The Bike Guy is a young adult novel about a boy named Alex who loves bikes. He loves to ride them, fix them, and build them. One day, Alex finds a mysterious old bike in the woods. He takes it home and fixes it up, and soon he is racing it all over town.</p>
+                <p>{{ book.description }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -96,25 +102,6 @@
         </div>
     </div>
 </div>
-
-<!-- Modal for Book Descriptions -->
-<div class="modal fade" id="descriptionModal2" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel2" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content bg-dark text-white">
-            <div class="modal-header">
-                <h5 class="modal-title" id="descriptionModalLabel2">Create Your Own Business Description</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="text-white">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>A captivating journey through the world of entrepreneurship and business, "Create Your Own Business" offers practical insights, expert advice, and real-life success stories. Learn how to turn your passion into profit and build a thriving enterprise from the ground up.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+{% endfor %}
 
 {% endblock %}
