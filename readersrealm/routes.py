@@ -23,7 +23,9 @@ def index():
     Function to render the index html page 
     """
     active_page = 'index'
-    return render_template("index.html", active_page=active_page)
+    featured_books = Book.query.join(Review).group_by(Book.id).order_by(db.func.sum(Review.rating).desc()).limit(2).all()
+
+    return render_template("index.html", active_page=active_page, featured_books=featured_books)
 
 # Define a route for the registration page
 @app.route('/register')
