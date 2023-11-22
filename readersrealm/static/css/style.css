@@ -143,8 +143,8 @@ footer {
 }
 
 .button-small {
-    padding: 2px;
-    font-size: 85%;
+    padding: 5px;
+    font-size: 100%;
 }
 
 .rounded {
@@ -172,6 +172,11 @@ footer {
 
     html {
         font-size: 80%!important;
+    }
+
+    .button-small {
+        padding: 2px;
+        font-size: 90%;
     }
 }
 
