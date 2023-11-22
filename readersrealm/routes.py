@@ -20,14 +20,15 @@ def is_valid_password(password):
 @app.route("/")
 def index():
     """
-    Function to render the index html page 
+    Function to render the index html page, and to display on the home page
+    the two books with the highest ratings.
     """
     active_page = 'index'
     featured_books = Book.query.join(Review).group_by(Book.id).order_by(db.func.sum(Review.rating).desc()).limit(2).all()
 
     return render_template("index.html", active_page=active_page, featured_books=featured_books)
 
-# Define a route for the registration page
+
 @app.route('/register')
 def register():
     """
@@ -220,8 +221,8 @@ def edit_book(book_id):
         return redirect('login')
     
     book = Book.query.get(book_id)
-    if book_id is None:
-        return redirect(url_for('404'))
+    if book is None:
+        return not_found_error(404)
 
     if request.method == 'POST':
         # Handle the form submission with the updated book data
@@ -230,14 +231,19 @@ def edit_book(book_id):
         book.description = request.form.get('description')
         book.publication_year = request.form.get('publication_year')
         book.genre = request.form.get('genre')
-        book.image_url = request.form.get('image_url')
+        book.url = request.form.get('image_url')
+        if not request.form.get('image_url'):
+            book.image_url = "/static/images/not-available.webp"
+        else:
+            book.image_url = request.form.get('image_url')
 
         # Check if user id matches user id in the books table
         if user_id == book.user_id:
             db.session.commit()
+            
+        flash('Your book has successfully been updated', 'success')  
+        return redirect(url_for('edit_book', book_id=book_id))
 
-        flash('Book updated successfully!', 'success')
-        return redirect(url_for('index'))
 
     return render_template('edit-book.html', book=book)
 
@@ -252,7 +258,7 @@ def delete_book(book_id):
     # Retrieve the book from the database
     book = Book.query.get(book_id)
     if book is None:
-            return render_template('404.html', error='Book not found'), 404
+            return not_found_error(404)
 
     if book:
         # Check if the logged-in user is the owner of the book
@@ -260,9 +266,6 @@ def delete_book(book_id):
             # Delete the book from the database
             db.session.delete(book)
             db.session.commit()
-        #     flash('Book deleted successfully!', 'success')
-        # else:
-        #     flash('You are not authorized to delete this book.', 'error')
 
     # Redirect back to the profile
     return redirect(url_for('profile', username=session.get('username')))
@@ -278,7 +281,7 @@ def reviews(book_id):
     """
     book = Book.query.get(book_id)
     if book is None:
-        return render_template('404.html', error='Book not found'), 404
+        return not_found_error(404)
     
     reviews = Review.query.filter_by(book_id=book.id).all()
 
@@ -303,7 +306,7 @@ def add_review(book_id):
 
     book = Book.query.get(book_id) 
     if book is None:
-        return render_template('404.html', error='Book not found'), 404
+        return not_found_error(404)
 
     if request.method == 'POST':
         user_id = session['user_id']  # Get the user's ID from the session
@@ -358,7 +361,7 @@ def edit_review(review_id):
             review.comment = new_comment
             db.session.commit()
         
-        # flash('Review updated successfully!', 'success')
+        flash('Review updated successfully!', 'success')
         return redirect(url_for('reviews', book_id=book.id))
     
     return render_template('edit-review.html', review=review, book=book, review_id=review_id)
