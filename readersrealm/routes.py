@@ -277,16 +277,19 @@ def reviews(book_id):
     """ 
     function to display reviews matched with the book's ID
     check if the book exists first, if not 404, 
-    then query data base for reviews on that given book, and display on reviews page.
+    then query the database for reviews on that given book, and display on the reviews page.
     """
-    book = Book.query.get(book_id)
-    if book is None:
-        return not_found_error(404)
-    
-    reviews = Review.query.filter_by(book_id=book.id).all()
+    try:
+        book = Book.query.get(book_id)
+        if book is None:
+            return not_found_error(404)
+        
+        reviews = Review.query.filter_by(book_id=book.id).all()
 
-    return render_template('reviews.html', book=book, reviews=reviews)
+        return render_template('reviews.html', book=book, reviews=reviews)
 
+    except Exception as e:
+        return internal_server_error(e)
 
 
 @app.route('/add_review/<book_id>', methods=['GET', 'POST'])
@@ -296,34 +299,38 @@ def add_review(book_id):
     First check if users are logged in to add a review, then check if the book exists.
     Then get the form data including getting the users ID and then add and commit to the database
     """
-    # Check if the user is logged in
-    user_id = session.get('user_id')
+    try:
+        # Check if the user is logged in
+        user_id = session.get('user_id')
 
-    if 'user_id' not in session:
-        session['login_required'] = True 
-        flash('Please log in to add a review.', 'error')
-        return redirect(url_for('login'))
+        if 'user_id' not in session:
+            session['login_required'] = True 
+            flash('Please log in to add a review.', 'error')
+            return redirect(url_for('login'))
 
-    book = Book.query.get(book_id) 
-    if book is None:
-        return not_found_error(404)
+        book = Book.query.get(book_id) 
+        if book is None:
+            return not_found_error(404)
 
-    if request.method == 'POST':
-        user_id = session['user_id']  # Get the user's ID from the session
-        rating = request.form['rating']  # Capture the rating from the form
-        comment = request.form['comment']  # Capture the review content (comment)
+        if request.method == 'POST':
+            user_id = session['user_id']  # Get the user's ID from the session
+            rating = request.form['rating']  # Capture the rating from the form
+            comment = request.form['comment']  # Capture the review content (comment)
 
-        # Create a new review with the above data
-        new_review = Review(user_id=user_id, book_id=book_id, rating=rating, comment=comment)
-        db.session.add(new_review)
-        db.session.commit()
+            # Create a new review with the above data
+            new_review = Review(user_id=user_id, book_id=book_id, rating=rating, comment=comment)
+            db.session.add(new_review)
+            db.session.commit()
+            flash('Review added successfully!', 'success')
 
-        flash('Review added successfully!', 'success')
+            # Redirect to the reviews page after adding the review
+            return redirect(url_for('reviews', book_id=book_id))
 
-        # Redirect to the reviews page after adding the review
-        return redirect(url_for('reviews', book_id=book_id))
+        return render_template('add-review.html', book_id=book_id, book=book)
 
-    return render_template('add-review.html', book_id=book_id, book=book)
+    except Exception as e:
+        return internal_server_error(e)
+
 
 
 @app.route('/edit_review/<int:review_id>', methods=['GET', 'POST'])
@@ -361,8 +368,8 @@ def edit_review(review_id):
             review.comment = new_comment
             db.session.commit()
         
-        flash('Review updated successfully!', 'success')
-        return redirect(url_for('reviews', book_id=book.id))
+            flash('Review updated successfully!', 'success')
+            return redirect(url_for('edit_review', review_id=review.id))
     
     return render_template('edit-review.html', review=review, book=book, review_id=review_id)
 
@@ -373,7 +380,7 @@ def delete_review(review_id):
     """
     Function to delete reviews, if no review found send 404 error.
     Then check is the current logged in user id matches the 
-    user id of the review, and if so delete review from database.
+    user id of the review, and if not  and if so delete review from database.
     Then direct user back to their profile page.
 
     """
@@ -383,10 +390,11 @@ def delete_review(review_id):
 
     # Retrieve the current user's ID from the session
     user_id = session.get('user_id')
-    if user_id == review.user_id:
+    if user_id != review.user_id:
+        return forbidden_error(403)
 
-        db.session.delete(review)
-        db.session.commit()
+    db.session.delete(review)
+    db.session.commit()
 
     flash('Review deleted successfully.', 'success')
 
@@ -398,21 +406,24 @@ def delete_review(review_id):
 def profile(username):
     """
     Render the user profile page.
-    if not a current user and someone tries to access profiles, 404 error page
     If the user is not logged in, they are redirected to the login page with an error message.
     If the requested username matches the session username, the user's profile is displayed.
     If the requested username does not match the session username, an unauthorized access error is flashed.
     If the requested username does not exist, a user not found error is flashed.
     """
     active_page = 'profile'
+
     # Get session username
     if session.get('username'):
         current_username = session['username']
-        # If current user tries accessing profiles send to 404
+
+        # If current user tries accessing profiles, send to 403 Forbidden error
         if not current_username:
-            return render_template('404.html')
+            return forbidden_error(403)
+
         if username == current_username:
             user = User.query.filter_by(username=username).first()
+
             # If user ID's match review and books ID's display on users profile
             if user:
                 review_ids = [review.id for review in Review.query.filter_by(user_id=user.id).all()]
@@ -420,11 +431,9 @@ def profile(username):
                 books = Book.query.filter_by(user_id=user.id).all()
                 return render_template('profile.html', active_page=active_page, user=user, reviews=reviews, books=books, review_ids=review_ids)
             else:
-                flash('User not found.', 'error')
-                return redirect(url_for('index'))
+                return not_found_error(404)
         else:
-            flash('Unauthorized access.', 'error')
-            return redirect(url_for('index'))
+            return forbidden_error(403)
     else:
         flash('Please log in to view profiles.', 'error')
         return redirect(url_for('login'))
@@ -475,7 +484,24 @@ def search():
 
 @app.errorhandler(404)
 def not_found_error(error):
-    """
-    Function to render the 404 html page 
-    """
-    return render_template('404.html', error=error), 404
+    error_number = 404
+    error_message = 'Page Not Found'
+    return render_template('error.html', error_number=error_number, error_message=error_message), error_number
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    error_number = 500
+    error_message = 'Internal Server Error'
+
+    return render_template('error.html', error_number=error_number, error_message=error_message), error_number
+
+
+@app.errorhandler(Exception)
+def generic_error(error_number):
+    error_number = 500
+    return render_template('error.html', error_number=error_number, error_message='Something went wrong'), 500
+
+
+@app.errorhandler(403)
+def forbidden_error(error):
+    return render_template('error.html', error_number=403, error_message='Forbidden'), 403
