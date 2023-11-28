@@ -199,6 +199,7 @@ def add_book_form():
                         image_url=image_url,
                         user_id=user_id,
                         genre=genre)
+                        
         db.session.add(new_book)
         db.session.commit()
 
@@ -223,6 +224,9 @@ def edit_book(book_id):
     book = Book.query.get(book_id)
     if book is None:
         return not_found_error(404)
+
+    if user_id != book.user_id:
+        return forbidden_error(403)
 
     if request.method == 'POST':
         # Handle the form submission with the updated book data
@@ -266,6 +270,8 @@ def delete_book(book_id):
             # Delete the book from the database
             db.session.delete(book)
             db.session.commit()
+        else:
+            return forbidden_error(403)
 
     # Redirect back to the profile
     return redirect(url_for('profile', username=session.get('username')))
@@ -370,6 +376,8 @@ def edit_review(review_id):
         
             flash('Review updated successfully!', 'success')
             return redirect(url_for('edit_review', review_id=review.id))
+        else:
+            return forbidden_error(403)
     
     return render_template('edit-review.html', review=review, book=book, review_id=review_id)
 
