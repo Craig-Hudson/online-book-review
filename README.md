@@ -1,7 +1,7 @@
 # Readers Realm
 
 ------------
-[Link to live site here](#  "Link to live site here")
+[Link to live site here](#https://readers-realm-40212841c1a0.herokuapp.com/  "Link to live site here")
 
 <!-- ![Am I responsive image](assets/images/readme-images/am-i-responsive.webp) -->
 
@@ -34,7 +34,8 @@
 
 ## Introduction
 
-
+I have created a simple online book review web app, it will allow users to be able to register to the website, so they can utilize everything the website has to offer. Users that are'nt registered will still be able to view all the books on show, and be able to view reviews that may have been left by other users.
+If a user want's to be able to add a book to display on the website they must be registered and logged in, and if users want to leave reviews on any books on the website, they must also be registered and logged in. Registered users will also have their own profile page, which will allow them to view all the reviews and books they have added, users will also be able to edit and delete the reviews and books they've added.
 
 ## User Experience (UX)
 
@@ -60,16 +61,31 @@
 
 ![color pallette](./documentation/readme/ms3-colour-pallette.png)
 
-- 
+- **typography**
+- font-family: merriweather sans will be used for all headings spanning across all pages I have opted to use italic also., and then font-family: sans-serif will be used for navigation links, and all page text.
+
+- **Structure**
+  <!-- - Users logged out / Not registered -->
+
+  - The structure of the website is as follows, users will first be taken to the Home page, where there are two featured books, which are displayed depending on which two books have the highest overall ratings.
+  - Then there's the browse books page where users will be able to view all the books readers realm has to offer.
+  - Then we have a reviews page where users will be able to view all the reviews of each individual book.
+  - Then we have a contact page.
+  - Then we have a login page.
+  - Then we have a Register page
   
-  - **typography**
-  - font-family: merriweather sans will be used for all headings spanning across all pages I have opted to use italic also., and then font-family: sans-serif will be used for navigation links, and all page text.
+  <!-- - Users logged in -->
 
-  - **Structure**
-    - 
+  - Once users are logged in the navigation links at the top will slightly change, login will be replaces with profile, and register is replaced with logout.
+  - The profile page consists of the users details, and all the books and reviews they've added.
+  - Add book page, to allow users to add books to the website.
+  - Edit book page, to allow users to edit any book's they've added.
+  - Add review page to allow users to add reviews to any individual book.
+  - Edit review page, to allow users to edit any reviews they've added.
 
-  - **Imagery**
-  - 
+- **Imagery**
+  
+  -
 
   - **Wireframes**
 
@@ -83,11 +99,16 @@ I have been attentive to make the website as accessible-friendly as possible thr
 - Incorporating descriptive alt attributes for images on the site to provide alternative text for screen readers.
 - I also tested my website using wave which reports back to me any errors/contrast errors that may occur.
   
-By implementing them few points above I have made my webpage as accessible and user friendly as possible taking into account those who may be visually impaired and require screen readers for assistance.
+By implementing the few points above I have made my webpage as accessible and user friendly as possible taking into account those who may be visually impaired and require screen readers for assistance.
 
 ## Features
 
-- 
+<details>
+
+  <summary>Register page</summary>
+  ![Feature page](./documentation/feature-images/register-page.png)
+
+</details>
 
 
 ## Technologies Used
@@ -126,8 +147,7 @@ Balsamiq - I used Balsamiq wireframes from a desktop app for my wireframes,
 
 [W3School](https://www.w3schools.com/) To refer to anything Java script related that i may have been unsure of.
 
-VsCode - I have used vscode as my ide
-
+Gitpod - I have used vscode as my ide
 
 ## Testing
 
@@ -143,6 +163,9 @@ All my testing can be found in the [testing file](testing.md)
 onto the browse-books.html page, but the issue I had was with storing a default image, if the user choice weather or not to
 enter an image of the book,
 
+- On mobile screens the register form was being pushed up into the navbar, I noticed using devtools
+that my media query at 576px of making the height of the container 60vh and the height of 100% at 320px seemed to be causing the issue, so I tested it on the live site without it, and this had resolved the issue.
+
 - **Known Bugs**
 
 Currently There is no known bugs
@@ -151,62 +174,124 @@ Currently There is no known bugs
 
 ### Deployment
 
-Github Pages was used to deploy the live website. The instructions to achieve this are below:
-​
+Old Heroku Deployment Instructions
+The site is deployed using Heroku. To deploy to Heroku:
 
-1. Log in (or sign up) to Github.
-2. Find the repository for this project here > [Millionaire](<https://github.com/Craig-Hudson/Millionaire>)
-3. Click on the Settings link.
-4. Click on the Pages link in the left hand side navigation bar.
-5. In the Source section, choose main from the drop down select branch menu. Select Root from the drop down select folder menu.
-6. Click Save. Your live Github Pages site is now deployed at the URL shown.
-​
+1. To successfully deploy on Heroku we first need to create some files: a requirements.txt file and a Procfile.
+
+2. The requirements.txt file contains all the applications and dependencies that are required to run the app. To create the requirements.txt file run the following command in the terminal:
+
+    ```bash
+    pip3 freeze --local > requirements.txt
+    ```
+
+3. The Procfile tells Heroku which files run the app and how to run it. To create the Procfile run the following command in the terminal:
+
+    ```bash
+    echo web: python app.py > Procfile
+    ```
+
+    NOTE: The Procfile uses a capital P and doesn't have a file extension on the end.
+
+4. If the Procfile has been created correctly it will have the Heroku logo next to it. It is also important to check the Procfile contents, as sometimes on creation a blank line will be added at the end of the file. This can sometimes cause problems when deploying to Heroku, so if the file contains a blank line at the end, delete this and save the file. Make sure to save both these files and then add, commit and push them to GitHub.
+
+5. Login (or sign up) to [Heroku.com](https://www.heroku.com).
+
+6. Click the new button and then click create new app.
+
+7. You will then be asked to give your app a name (these must be unique so you cannot reuse bookworm) and select a region. Once these are completed click create app.
+
+8. You will now need to connect the Heroku app to the GitHub repository for the site. Select GitHub in the deployment section, find the correct repository for the project and then click connect.
+
+9. Once the repository is connected, you will need to provide Heroku some config variables it needs to build the app. Click on the settings tab and then click reveal config vars button. You will now need to add the environment key/value variables that were used in the env.py file:
+
+    | KEY | VALUE |
+    | :-- | :-- |
+    | IP | 0.0.0.0 |
+    | PORT | 5000 |
+    | SECRET_KEY | ANY_SECRET_KEY* |
+    | DB_URL | postgresql:///readersrealm |
+    | DEBUG | TRUE** |
+
+    *Denotes a value that is specific to your app.
+
+    **This is set to true to enable us to see any bugs on the live site. ~~Please change to FALSE after deployment.~~
+
+10. You're now ready to click the enable automatic deploys and create button. Heroku will start building the app.
+
+11. As this project utilizes a relational database, there are a few more steps to set this up.
+
+12. On the heroku dashboard go to resources tab and then select add-ons. You will need to search for and select heroku postgres. For this project the hobby dev free tier is fine.
+
+13. Go back into settings and reveal config vars. You should now see a new key called DATABASE_UL and the value should have been pre-populated.
+
+14. We will now need to go the more button on the dashboard and select run console. This is where we will set up the tables in the database we have just created.
+
+15. Type python3 and then once the python interpreter opens, we can run the following:
+
+    ```bash
+    from readersrealm import db
+    db.create_all()
+    exit()
+    ```
+
+16. Now that the relational database has been set up and the tables created, we can now click open app and the Readers realm application should now open in a new tab.
 
 ### Local Development
 
 #### How to Fork
 
-​
-To fork The Millionaire repository:
-​
+To fork the repository:
 
 1. Log in (or sign up) to Github.
-2. Go to the repository for this project, Millionaire !(<https://github.com/Craig-Hudson/Millionaire.git>)
+
+2. Go to the repository for this project, [ReadersRealm](https://github.com/Craig-Hudson/online-book-review).
+
 3. Click the Fork button in the top right corner.
-​
 
 #### How to Clone
 
-​
-To clone The Millionaire repository:
-​
+To clone the repository:
 
 1. Log in (or sign up) to GitHub.
-2. Go to the repository for this project.
-3. Click on the code button, select whether you would like to clone with HTTPS !(<https://github.com/Craig-Hudson/Millionaire.git>) and copy the link shown.
+
+2. Go to the repository for this project, [ReadersRealm](https://github.com/Craig-Hudson/online-book-review).
+
+3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
+
 4. Open the terminal in your code editor and change the current working directory to the location you want to use for the cloned directory.
-5. Type 'git clone' into the terminal and then paste the link you copied in step 3. Press enter.
+
+5. Type the following command in the terminal (after the git clone you will need to paste the link you copied in step 3 above):
+
+    ```bash
+    git clone { & THE LINK FROM STEP 3 }
+    ```
+
+6. Set up a virtual environment (this step is not required if you are using the Code Institute Template in GitPod as this will already be set up for you).
+
+7. Install the packages from the requirements.txt file by running the following command in the Terminal:
+
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+
+- - -
 ​
 
 ## Credits
 
 ### Images used
 
-- Image by "https://www.freepik.com/free-vector/bike-guy-wattpad-book-cover_28596242.htm#query=book%20covers&position=4&from_view=keyword&track=ais"
-- Image by "https://www.freepik.com/free-vector/minimalist-book-cover-template_13209950.htm#query=book%20covers&position=10&from_view=keyword&track=ais"
--Image by https://www.freepik.com/free-vector/gradient-no-photo-sign-design_22890125.htm#query=unavailable%20image&position=1&from_view=search&track=ais
-
+-Image by <https://www.freepik.com/free-vector/gradient-no-photo-sign-design_22890125.htm#query=unavailable%20image&position=1&from_view=search&track=ais>
+This image is used as a default image for users who don't enter a URL link in the add book form.
 
 ### Code Used
 
 - Most of the code in this project was written my myself, references to w3schools and mdn web docs have been made with some of the code also, weather thats remembering a syntax, or re jogging my memory.
 
-
-
 ### Content
 
-The use of the information which I used for the sanitizeAnswer function which I used some of the code from an stack overflow post and the high score local storage functions in the game.js and home.js files which I used a youtube tutorial for.
-The use of w3schools for any prompts for any syntax I may of needed a reminder off.
+The use of w3schools/MDN web docs and code institute lessons for any prompts and reminders for any template syntax or how to create the database models.
 
 The other content for this project was written by Craig Hudson.
 
@@ -218,7 +303,7 @@ The other content for this project was written by Craig Hudson.
 
 I would like to acknowledge the following people who helped me along the way in completing this project:
 
-- My code institute mentor Narender Singh for feedback and the many ways I can improve.
+- My code institute mentor Brian for feedback and the many ways I can improve.
 - My partner for having the patience with me and allowing me more time to work on projects.
 - My fellow classmates Ross and dan for any hints and tips that they have given me over the last few weeks.
 - Other family who have helped test my quiz application and given me constructive feedback, and ideas that I would be able to improve the quiz application.
