@@ -199,7 +199,7 @@ def add_book_form():
                         image_url=image_url,
                         user_id=user_id,
                         genre=genre)
-                        
+
         db.session.add(new_book)
         db.session.commit()
 
@@ -497,7 +497,7 @@ def not_found_error(error):
     return render_template('error.html', error_number=error_number, error_message=error_message), error_number
 
 @app.errorhandler(500)
-def internal_server_error(error):
+def internal_server_error(error_number):
     error_number = 500
     error_message = 'Internal Server Error'
 
@@ -511,5 +511,6 @@ def generic_error(error_number):
 
 
 @app.errorhandler(403)
-def forbidden_error(error):
-    return render_template('error.html', error_number=403, error_message='Forbidden'), 403
+def forbidden_error(error_number):
+    error_number = 403
+    return render_template('error.html', error_number=error_number, error_message='Forbidden'), 403
