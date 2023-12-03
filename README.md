@@ -105,8 +105,81 @@ By implementing the few points above I have made my webpage as accessible and us
 
 <details>
 
+  <summary>Home Page</summary>
+
+  ![Home Page](./documentation/feature-images/home-page.png)
+
+</details>
+
+<details>
+
+  <summary>Browse Books Page</summary>
+
+  ![browse books page](documentation/feature-images/browse-books-page.png)
+
+</details>
+
+<details>
+
+  <summary>Contact Page</summary>
+
+  ![Contact page](./documentation/feature-images/contact-page.png)
+  
+</details>
+
+<details>
+
   <summary>Register page</summary>
-  ![Feature page](./documentation/feature-images/register-page.png)
+
+  ![Feature Page](./documentation/feature-images/register-page.png)
+
+</details>
+
+<details>
+
+  <summary>Login Page</summary>
+
+  ![Login Page](./documentation/feature-images/login-page.png)
+
+</details>
+
+<details>
+
+  <summary>Edit Book page</summary>
+
+  ![Edit Book Page](./documentation/feature-images/edit-book.png)
+
+</details>
+
+<details>
+
+  <summary>Edit Review Page</summary>
+
+![Edit Review Page](./documentation/feature-images/leit-review.png)
+
+</details>
+
+<details>
+
+  <summary>Add Book Page</summary>
+
+  ![Add Book Page](./documentation/feature-images/add-book.png)
+
+</details>
+
+<details>
+
+  <summary>Search Results Page</summary>
+
+  ![Search Results Page](./documentation/feature-images/search-results.png)
+
+</details>
+
+<details>
+
+  <summary>Add Review Page</summary>
+
+  ![Add Review Page](./documentation/feature-images/add-review.png)
 
 </details>
 
@@ -306,4 +379,4 @@ I would like to acknowledge the following people who helped me along the way in 
 - My code institute mentor Brian for feedback and the many ways I can improve.
 - My partner for having the patience with me and allowing me more time to work on projects.
 - My fellow classmates Ross and dan for any hints and tips that they have given me over the last few weeks.
-- Other family who have helped test my quiz application and given me constructive feedback, and ideas that I would be able to improve the quiz application.
+- Other family who have helped test my online book review and have given me constructive feedback, and ideas that I would be able to improve my application.
