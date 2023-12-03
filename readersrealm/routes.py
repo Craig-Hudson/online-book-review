@@ -225,7 +225,7 @@ def edit_book(book_id):
     if book is None:
         return not_found_error(404)
 
-    if user_id != book.user_id:
+    if user_id != book.user_id or session['username'] != request.args.get('username'):
         return forbidden_error(403)
 
     if request.method == 'POST':
@@ -361,23 +361,24 @@ def edit_review(review_id):
     if book is None:
        return not_found_error(404)
 
+    if session['user_id'] != review.user_id or session['username'] != request.args.get('username'):
+        return forbidden_error(403)
+
     if request.method == 'POST':
         # Handle the form submission with the updated review data
         new_rating = request.form.get('rating')
         new_comment = request.form.get('comment')
         
-        user_id = session.get('user_id')
-        if user_id == review.user_id:
-
-            # Update the review in the database with the new data
-            review.rating = new_rating
-            review.comment = new_comment
-            db.session.commit()
         
-            flash('Review updated successfully!', 'success')
-            return redirect(url_for('edit_review', review_id=review.id))
-        else:
-            return forbidden_error(403)
+
+        # Update the review in the database with the new data
+        review.rating = new_rating
+        review.comment = new_comment
+        db.session.commit()
+        
+        flash('Review updated successfully!', 'success')
+        return redirect(url_for('edit_review', review_id=review.id))
+        
     
     return render_template('edit-review.html', review=review, book=book, review_id=review_id)
 
