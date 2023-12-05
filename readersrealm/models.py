@@ -31,7 +31,7 @@ class Book(db.Model):
     genre = db.Column(db.String(200))
     description = db.Column(db.String(200))
     publication_year = db.Column(db.Integer)
-    image_url = db.Column(db.String(512), default='not-available.webp')
+    image_url = db.Column(db.String(2000), default='not-available.webp')
     author = db.relationship('Author', backref='books')
     reviews = db.relationship('Review', cascade='delete')
 
