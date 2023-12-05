@@ -19,13 +19,13 @@ body {
 }
 
 /* NAVIGATION */
+
 .navbar-toggler:hover {
     transform: scale(1.1);
     border-color: whitesmoke;
   }
 
-
-  /* SEARCH BAR */
+/* SEARCH BAR */
 
 .form-control {
     background-color: #fff; 
@@ -70,6 +70,7 @@ a {
 
 
 /* Featured Books */
+
 .feature-book-image {
     height: 300px;
     margin: 0 auto;
@@ -126,6 +127,7 @@ footer {
 }
 
 /* MODAL */
+
 .modal-footer {
     border-top: none;
 }
@@ -135,6 +137,7 @@ footer {
 }
 
 /* Buttons */
+
 .btn-primary {
     background-color: #cce5ff;
     color: #004085;
@@ -153,6 +156,7 @@ footer {
 
 
 /* tablet media queries */
+
 @media screen and (max-width: 768px) {
     html {
         font-size: 85%!important;
@@ -180,6 +184,8 @@ footer {
     }
 }
 
+/* Mobile media queries  */
+
 @media screen and (max-width: 320px) {
     .browse-books-title {
         font-size: 90%!important;
@@ -187,5 +193,5 @@ footer {
 } 
 
 
-/* larger screen */
+
  

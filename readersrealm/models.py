@@ -12,7 +12,6 @@ class User(db.Model):
     reviews = db.relationship('Review', backref='user_reviews', lazy=True)
     books = db.relationship('Book', backref='owner', lazy=True)
 
-
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
@@ -20,7 +19,6 @@ class User(db.Model):
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
-
 
 
 class Book(db.Model):
@@ -57,4 +55,3 @@ class Review(db.Model):
     review_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     user = db.relationship('User', backref='user_reviews')
     book = db.relationship('Book', backref='user_reviews')
-    
