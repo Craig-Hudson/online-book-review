@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label for="author_name">Author Name</label>
                     <input type="text" class="form-control" id="author_name" name="author_name"
-                        value="{{ book.author.name }}" required />
+                        value="{{ book.author.name }}" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label for="publication_year">Publication Year</label>
                     <input type="number" class="form-control" id="publication_year" name="publication_year"
-                        value="{{ book.publication_year }}" required />
+                        value="{{ book.publication_year }}" required>
                 </div>
                 <div class="form-group">
                     <label for="genre">Genre</label>
@@ -48,10 +48,10 @@
                 <div class="form-group">
                     <label for="image_url">Image URL</label>
                     {% if not book.image_url or book.image_url == "/static/images/not-available.webp" %}
-                    <input type="text" class="form-control" id="image_url" name="image_url" />
+                    <input type="text" class="form-control" id="image_url" name="image_url">
                     {% else %}
                     <input type="text" class="form-control" id="image_url" name="image_url"
-                        value="{{ book.image_url }}" />
+                        value="{{ book.image_url }}">
                     {% endif %}
                 </div>
                 <div class="d-flex justify-content-center">
