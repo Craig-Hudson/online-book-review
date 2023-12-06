@@ -20,7 +20,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+                <h2 class="modal-title" id="loginModalLabel">Login Required</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="text-white">&times;</span>
                 </button>
@@ -50,7 +50,7 @@
                 {% endif %}
 
                 <div class="card-body bg-dark border border-white">
-                    <h5 class="card-title text-center text-white">{{ book.title }}</h5>
+                    <h2 class="card-title text-center text-white larger-font">{{ book.title }}</h2>
                     <p class="card-text">
                         <strong>Description:</strong>
                         <button type="button" class="btn btn-link text-white pl-0" data-toggle="modal" data-target="#descriptionModal{{ book.id }}">
@@ -74,7 +74,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content bg-dark text-white">
                     <div class="modal-header">
-                        <h5 class="modal-title">Description</h5>
+                        <h3 class="modal-title larger-font">Description</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" class="text-white">&times;</span>
                         </button>

@@ -5,7 +5,7 @@
         <!-- Column for Book Details -->
         <div class="col-lg-6">
             <div class="border border-white bg-dark mt-5">
-                <h1 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h3>
+                <h2 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h2>
                 <div class="card mt-4 bg-dark">
                     {% if book.image_url == "not-available.webp" %}
                         <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}">
@@ -13,7 +13,7 @@
                         <img class="card-img-top review-image" src="{{ book.image_url }}" alt="{{ book.title }}">
                     {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title text-center">{{ book.title }}</h5>
+                        <h3 class="card-title text-center larger-font">{{ book.title }}</h3>
                         <hr>
                         <ul class="list-group list-group-flush border border-white text-white">
                             <li class="list-group-item bg-dark border border-white"><strong>Description:</strong> {{ book.description }}</li>
@@ -40,7 +40,7 @@
 
             <div class="row mt-4">
                 <div class="col-md-12 bg-dark text-white">
-                    <h2>Reviews:</h2>
+                    <h3>Reviews:</h3>
                     <ul class="list-group">
                         {% for review in reviews %}
                         <li class="list-group-item mb-2 bg-dark text-white border border-white">
@@ -60,7 +60,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addReviewModalLabel">Login Required</h5>
+                    <h4 class="modal-title" id="addReviewModalLabel">Login Required</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

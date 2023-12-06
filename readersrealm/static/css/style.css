@@ -18,6 +18,11 @@ body {
     background: url(../images/pexels-stanislav-kondratiev.webp) no-repeat center center / cover;
 }
 
+.larger-font {
+    font-size: 22px;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
 /* NAVIGATION */
 
 .navbar-toggler:hover {
@@ -153,7 +158,6 @@ footer {
 .rounded {
     border-radius: 15px!important;
 }
-
 
 /* tablet media queries */
 
