@@ -5,7 +5,7 @@
         <!-- Column for Book Details -->
         <div class="col-lg-6">
             <div class="border border-white bg-dark mt-5">
-                <h2 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h2>
+                <h1 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h1>
                 <div class="card mt-4 bg-dark">
                     {% if book.image_url == "not-available.webp" %}
                         <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}">

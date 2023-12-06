@@ -18,12 +18,12 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body bg-dark">
-                    <h5 class="card-title text-center">Reviews Added</h5>
+                    <h2 class="card-title text-center larger-font">Reviews Added</h2>
                     <div class="mb-4"></div>
                     {% for review in user.reviews %}
                     <div class="card mb-3 bg-dark border border-white">
                         <div class="card-body">
-                            <h3>{{ review.book.title }}</h3>
+                            <h3 class="larger-font">{{ review.book.title }}</h3>
                             <p><strong>Rating:</strong> {{ review.rating }}</p>
                             <p><strong>Review:</strong> {{ review.comment }}</p>
                             <div class="d-flex justify-content-around">
@@ -65,7 +65,7 @@
         <div class="col-md-4 mt-5 mt-md-0">
             <div class="card">
                 <div class="card-body bg-dark">
-                    <h5 class="card-title text-center">Books Added</h5>
+                    <h2 class="card-title text-center larger-font">Books Added</h2>
                     <div class="mb-4"></div>
                     {% for book in user.books %}
                     <div class="card mb-3 bg-dark border border-white">
@@ -75,7 +75,7 @@
                         <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}">
                         {% endif %}
                         <div class="card-body">
-                            <h5 class="card-title text-center">{{ book.title }}</h5>
+                            <h3 class="card-title text-center larger-font">{{ book.title }}</h3>
                         </div>
                         <div class="card-footer d-flex justify-content-around">
                             <a href="{{ url_for('edit_book', username=user.username, book_id=book.id) }}" class="btn btn-primary" aria-label="Edit Book">Edit</a>
