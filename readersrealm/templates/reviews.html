@@ -2,50 +2,56 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3 border border-white bg-dark mt-5">
-            <h3 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h3>
-            <div class="card mt-4 bg-dark">
-                {% if book.image_url == "not-available.webp" %}
-                    <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}">
-                {% else %}
-                    <img class="card-img-top review-image" src="{{ book.image_url }}" alt="{{ book.title }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title text-center">{{ book.title }}</h5>
-                    <hr>
-                    <ul class="list-group list-group-flush border border-white text-white">
-                        <li class="list-group-item bg-dark border border-white"><strong>Description:</strong> {{ book.description }}</li>
-                        <li class="list-group-item bg-dark border border-white"><strong>Author:</strong> {{ book.author.name }}</li>
-                        <li class="list-group-item bg-dark border border-white"><strong>Genre:</strong> {{ book.genre }}</li>
-                        <li class="list-group-item bg-dark border border-white"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
-                    </ul>
+        <!-- Column for Book Details -->
+        <div class="col-lg-6">
+            <div class="border border-white bg-dark mt-5">
+                <h1 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h3>
+                <div class="card mt-4 bg-dark">
+                    {% if book.image_url == "not-available.webp" %}
+                        <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}">
+                    {% else %}
+                        <img class="card-img-top review-image" src="{{ book.image_url }}" alt="{{ book.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ book.title }}</h5>
+                        <hr>
+                        <ul class="list-group list-group-flush border border-white text-white">
+                            <li class="list-group-item bg-dark border border-white"><strong>Description:</strong> {{ book.description }}</li>
+                            <li class="list-group-item bg-dark border border-white"><strong>Author:</strong> {{ book.author.name }}</li>
+                            <li class="list-group-item bg-dark border border-white"><strong>Genre:</strong> {{ book.genre }}</li>
+                            <li class="list-group-item bg-dark border border-white"><strong>Publication Year:</strong> {{ book.publication_year }}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-3 d-flex justify-content-center">
-            {% if not session.get('user_id') %}
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
-            {% else %}
-                <a href="{{ url_for('add_review', book_id=book.id) }}" aria-label="Add review page" class="btn btn-primary btn-lg"><strong>Add Review</strong></a>
-            {% endif %}
-        </div>
-    </div>
+        <!-- Column for Add Review Button and Reviews -->
+        <div class="col-lg-6 mt-lg-4">
+            <div class="row mt-4">
+                <div class="col-md-12 d-flex justify-content-center">
+                    {% if not session.get('user_id') %}
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
+                    {% else %}
+                        <a href="{{ url_for('add_review', book_id=book.id) }}" aria-label="Add review page" class="btn btn-primary"><strong>Add Review</strong></a>
+                    {% endif %}
+                </div>
+            </div>
 
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-3 bg-dark text-white">
-            <h2>Reviews:</h2>
-            <ul class="list-group">
-                {% for review in reviews %}
-                <li class="list-group-item mb-2 bg-dark text-white border border-white"> {# Adjusted margin here #}
-                    <p><strong>Rating:</strong> {{ review.rating }}</p>
-                    <p><strong>Review Date:</strong> {{ review.review_date.strftime("%d-%m-%y %H:%M:%S") }}</p>
-                    <p><strong>Comment:</strong> {{ review.comment }}</p>
-                </li>
-                {% endfor %}
-            </ul>
+            <div class="row mt-4">
+                <div class="col-md-12 bg-dark text-white">
+                    <h2>Reviews:</h2>
+                    <ul class="list-group">
+                        {% for review in reviews %}
+                        <li class="list-group-item mb-2 bg-dark text-white border border-white">
+                            <p><strong>Rating:</strong> {{ review.rating }}</p>
+                            <p><strong>Review Date:</strong> {{ review.review_date.strftime("%d-%m-%y %H:%M:%S") }}</p>
+                            <p><strong>Comment:</strong> {{ review.comment }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -70,6 +76,5 @@
             </div>
         </div>
     </div>
-    
 </div>
 {% endblock %}
