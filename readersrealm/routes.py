@@ -250,8 +250,7 @@ def edit_book(book_id):
     if book is None:
         return not_found_error(404)
 
-    if user_id != book.user_id or \
-            session['username'] != request.args.get('username'):
+    if user_id != book.user_id:
         return forbidden_error(403)
 
     if request.method == 'POST':
