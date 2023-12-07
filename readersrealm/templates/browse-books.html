@@ -43,11 +43,13 @@
         {% for book in books %}
         <div class="col-md-3 mb-4">
             <div class="card bg-dark">
-                {% if book.image_url == "not-available.webp"  %}
-                <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}">
-                {% else %}
-                <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}">
-                {% endif %}
+                <a href="{{ url_for('reviews', book_id=book.id) }}">
+                    {% if book.image_url == "not-available.webp"  %}
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}">
+                    {% else %}
+                    <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}">
+                    {% endif %}
+                </a>
 
                 <div class="card-body bg-dark border border-white">
                     <h2 class="card-title text-center text-white larger-font">{{ book.title }}</h2>
