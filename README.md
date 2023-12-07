@@ -1,7 +1,7 @@
 # Readers Realm
 
 ------------
-[Link to live site here](#https://readers-realm-40212841c1a0.herokuapp.com/  "Link to live site here")
+[Link to live site here](https://readers-realm-40212841c1a0.herokuapp.com/  "Link to live site here")
 
 <!-- ![Am I responsive image](assets/images/readme-images/am-i-responsive.webp) -->
 
