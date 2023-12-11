@@ -239,6 +239,8 @@ enter an image of the book,
 - On mobile screens the register form was being pushed up into the navbar, I noticed using devtools
 that my media query at 576px of making the height of the container 60vh and the height of 100% at 320px seemed to be causing the issue, so I tested it on the live site without it, and this had resolved the issue.
 
+- While testing my register page, I came across and bug where it wouldn't let me register at all, and I kept getting the same warning on the page, suggesting that I had'nt entered a password with 8 characters, a number, and a special character, so which led me to believe it was something wrong with the password pattern in my route.py file that may be causing the issue, and after a quick search and a change of pattern, it then began to let me log in, and my register_post function in my route file, executed as expected.
+
 - **Known Bugs**
 
 Currently There is no known bugs
