@@ -13,12 +13,8 @@ import os
 
 # Password pattern that enforces at least 8 characters with
 # 1 number and 1 special character
-password_pattern = r"""
-    ^(?=.*[0-9])
-    (?=.*[!@#$%^&*()_+|~=\-\\[\];\',./{}:<>?])
-    ([A-Za-z0-9!@#$%^&*()_+|~=\-\\[\];\',./{}:<>?]){8,}
-    $
-"""
+
+password_pattern = r"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$"
 
 
 def is_valid_password(password):
@@ -51,19 +47,7 @@ def register():
 
 @app.route('/register_post', methods=['GET', 'POST'])
 def register_post():
-    """
-    Function for users to register to the website
-    get the input from the form,
-    then check to see if the password is valid using the
-    is valid password function,
-    and display message to inform user,then check
-    if the password and password confirmation match,
-    then check if the username or email is already in use,
-    if so flash message to inform user.
-    Then create a variable that will store
-    a hashed password to go into the database,
-    then send users details to be stored in the database
-    """
+
     if request.method == "POST":
         username = request.form.get('username')
         email = request.form.get('email')
@@ -72,39 +56,48 @@ def register_post():
 
         if not is_valid_password(password):
             flash("""
-                Password must be at least 8 characters long and contain
-                1 number and 1 special character.""", 'error')
+            Password must be at least 8 characters long and contain
+            1 number and 1 special character.""", 'error')
             return render_template('register.html')
 
-        # Error handling to check  password and password confirmation match.
+        # Check if passwords match
         if password != password_confirmation:
             flash('Passwords do not match.', 'error')
             return render_template('register.html')
 
-        # Check if the username and email are already in use
+        # Check if username and email are available
         user = User.query.filter_by(username=username).first()
         email_user = User.query.filter_by(email=email).first()
 
-        # Error handling to check username or email has already been taken
-        if user or email_user:
-            flash('Username or email already in use.', 'error')
-            return render_template('register.html')
+        if user:
+            flash('Username already in use.', 'error')
+            return render_template(
+                'register.html',
+                username=username,
+                email=email)
 
-        # Hash the password before storing it in the database
+        if email_user:
+            flash('Email already in use.', 'error')
+            return render_template(
+                'register.html', username=username, email=email)
+
+        # Hash the password
         password_hash = generate_password_hash(password)
 
-        # Create a new user record
-        new_user = User(username=username, email=email, password=password_hash,
-                        password_confirmation=password_hash)
+        # Create new user
+        new_user = User(
+            username=username, email=email, password=password_hash,
+            password_confirmation=password_hash
+        )
 
-        # Add the new user record to the database
+        # Add new user to the database
         db.session.add(new_user)
         db.session.commit()
 
         flash('Registration successful!', 'success')
         return redirect('/login')
 
-    return render_template('register.html', username=username, email=email)
+    return render_template('register.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
