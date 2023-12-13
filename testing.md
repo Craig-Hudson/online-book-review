@@ -27,11 +27,11 @@ This includes using chrome developer tools to test for responsiveness and for ge
 
 - Desktop Lighthouse report perfect scores all round!
 
-![Desktop Lighthouse report](assets/images/testing-images/desktop-lighthouse.webp)
+![Desktop Lighthouse report](documentation/lighthouse/lighthouse-desktop.png)
 
 - Mobile lighthouse report 
 
-![Mobile lighthouse report](assets/images/testing-images/mobile-lighthouse.webp)
+![Mobile lighthouse report](documentation/lighthouse/lighthouse-mobile.png)
 
 ### HTML validator
 
@@ -109,28 +109,28 @@ resolved, and making sure all the headings are there, and none are skipped.
 
 |  Goals | How are they achieved?  |
 | ------------ | ------------ |
-| As a first time visitor I want to be able to easily browse book reviews. |  |
-| As a first time visitor I want to be able to navigate around the website with ease. |  |
-| As a first time visitor I want a website to visually attractive and provide good user experience |  |
-| As a first time visitor I want to be able to create an account.  |  |
+| As a first time visitor I want to be able to easily browse book reviews. | This was achieved by having a view reviews button under each book, easily visible to the user. |
+| As a first time visitor I want to be able to navigate around the website with ease. | This was achieved by always having the navigation bar at the top of the screen, allowing for users to easily navigate around the website |
+| As a first time visitor I want a website to visually attractive and provide good user experience | This was achieved by using a relatively simple design, with the colors being consistent throughout the whole site, and the use of the background image.  |
+| As a first time visitor I want to be able to create an account.  | This was achieved by having the register navigation link always visible at the top of every page. |
 
 - **Returning Visitor Goals**
 
 | Goals  |  How are they achieved? |
 | ------------ | ------------ |
-| As a returning Visitor I want to be able to add/edit/delete reviews of other users books |  |
-| As a returning Visitor I want to be able to add a book not currently on the website. |  |
-| As a returning Visitor I want to be able to search for books with ease. |  |
-| As a returning visitor I don't want other users to be able to edit/delete my reviews or books I've added. |  |
+| As a returning Visitor I want to be able to add/edit/delete reviews of other users books | This was achieved by creating a user profile page, where the users can see all their reviews, and all the books they have added themselves onto the website, each with their own edit and delete button.  |
+| As a returning Visitor I want to be able to add a book not currently on the website. | This was done by comparing book names already stored in the database, along with the author name, and if none of these match whats in the database, then the users will be able to add a book onto the website, if not a flash message will appear on the add book form. |
+| As a returning Visitor I want to be able to search for books with ease. | This was achieved by having a search bar in the top left of the screen in my header, which will allow users to search for anything ranging from books, to author names etc.  |
+| As a returning visitor I don't want other users to be able to edit/delete my reviews or books I've added. | This was done by always thinking defensively while I was developing the app, always checking if users ore logged in, checking if users ID matches the ID's of the reviews, books etc. ![Code example of defensive programming.](documentation/testing-md-images/code-example.png) |
 ​
 
 - **Frequent visitor goals**
 
 |  Goals | How are they achieved  |
 | ------------ | ------------ |
-| As a frequent visitor I want to be able to easily access all books I've added onto the site, and make changes and or delete them where appropriate. |  |
+| As a frequent visitor I want to be able to easily access all books I've added onto the site, and make changes and or delete them where appropriate. | This was done by having a profile page for every user who registers to readers realm, there are two sections on the profile page, one for reviews and one for book, and each do have their own delete buttons for users to be able to delete books where appropriate. |
 | As a frequent visitor I want to be able to easily access all reviews I've added onto the site, and make changes and or delete them where appropriate.
- |  |
+ | This was done by having a profile page for every user who registers to readers realm, there are two sections on the profile page, one for reviews and one for book, and each do have their own delete buttons for users to be able to delete reviews where appropriate. |
 
 ### Full Testing
 
@@ -177,7 +177,7 @@ Testing was done on the following devices and browsers
 
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Add Book button(Not logged in) | Pop up modal to display to inform user that they need to be logged in to add a book  | Click button | Once the button was clicked, the modal popped up. | Pass |
+| Add Book button(Not logged in) | Pop up modal to display to inform user that they need to be logged in to add a book.  | Click button | Once the button was clicked, the modal popped up. | Pass |
 | Add book button(Logged in) | Once the button has been clicked the user should be taken to the add book page | Click button | I was taken to the add book page. | Pass |
 | Pop up modal(User not logged in) close button | Once the close button has been clicked the modal should close, and the user should be kept on the same page | Click close button | The modal closed, and I was kept on the same page | Pass |
 | Pop up modal(User not logged in) Login button | Once the login button has been clicked the user should be directed to the login page. | Click login button | I was taken to the login page | Pass |
@@ -206,40 +206,48 @@ Testing was done on the following devices and browsers
   
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  |  |  |  |  |
+| Different error messages 404, 500, 503 to appear depending on what the error is | Different error number messages to appear depending on what is broken. | break website to display different error message | Different error messages appeared | Pass |
+| Return home button | Taken user to home page | Click home page button | I was taken to the home page | Pass |
 
 - **Add Book Page**
   
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  |  |  |  |  |
+| Input field user prompts if left blank | For the user to be prompted that the input fields need filling in, apart from the image url input field | Leave input fields blank, and fill in one by one | I was prompted to fill in input field on all but the image url as expected | Pass |
+| Add book button | Once the user has filled in all input fields, they will be taken to the browse books page, where there book should be newly displayed, and it should also appear on the user's profile page, under book added. | Fill out add book form, and click add book | I was taken to the browse books page where the book I just added is displayed, It also was displayed under books added on my profile page | Pass |
 
 - **Edit Book Page**
   
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  |  |  |  |  |
+| Book details already stored in input fields from the database. | When I arrive on the edit book page, I will expect the book details for that certain book to be already there. | Goto edit book page | I checked two books, and the details for that certain book were already in the input fields. | Pass |
+| User to be promoted if they leave input fields blank when editing. | User to be prompted to fill in a certain input field if left blank. | Leave input fields blank. | I was prompted to fill in the input field when I left them blank. | Pass |
 
 - **Add Review Page**
   
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  |  |  |  |  |
+| Form Input fields | for user to be prompted to fill in both input fields. | Leave input fields blank to see if a prompt occurs. | When I left the input fields blank I was prompted to if fill out both input fields. | Pass |
+| Add review button | Once the user clicks on the add review button they should be taken back to the review page for the certain book they left their review on, their new review will be displayed, and it will also be displayed in the users profile, under reviews added. | Click add review button. | I was directed to the review page for the book I left a review on, I also went over to my profile, to find that my review was also added under reviews added. | Pass |
 
 - **Edit Review Page**
   
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  |  |  |  |  |
+|  Book details already stored in input fields from the database. | Review details already stored in the input fields. | Go to edit review page to see if the review details are already stored. | When I went to the edit review page the review details were already stored in the form input fields | Pass |
+| Form Input fields | for user to be prompted to fill in both input fields.  | leave input field blank. | When I left any of the input fields blank, I was prompted to fill them out. | Pass |
+| Edit review button | Once user has clicked button, It should refresh page, flash a message to the user, confirming review has been edited, pre populate with new data. | Click edit review button. | Once I clicked the edit review button the page reloaded, and a flash messaged appeared confirming that the editing had been completed, and the new data was pre populated in the form fields | Pass |
 
 - **Review Page**
   
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  |  |  |  |  |
+| Add review button | Once clicked, it should take user to the add review page. | Click button | I was taken to the add review page. | Pass |
 
 - **Profile Page**
   
 | Feature  | Expected outcome  | Testing performed  | Result  | Pass/Fail  |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  |  |  |  |  |
+| Delete Buttons on Reviews and Books. | Once A user clicks on the delete button, a pop up modal should appear giving the user an option of cancelling the delete, or deleting the review or book. | Click delete button. | Pop up modal popped up every time a delete button was clicked. | Pass |
+| Cancel button on modal. | To close modal down. | Click cancel button. | Modal closed | Pass |
+| Delete button on modal. | Once the delete button has been clicked on the modal, it will close the modal down, and it will delete the review or book the user has chosen to delete, note this will delete them everywhere on the website. | Click delete modal button. | Once I deleted a review and deleted a book, they disappeared everywhere on the website. | Pass |
