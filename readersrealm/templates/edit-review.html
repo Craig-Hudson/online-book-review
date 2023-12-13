@@ -11,11 +11,11 @@
                     <label for="rating">Rating (1-5)</label>
                     <select class="form-control" id="rating" name="rating" required>
                         <option value="">--Select a rating--</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                        <option value="1" {% if rating == 1 %}selected{% endif %}>1</option>
+                        <option value="2" {% if rating == 2 %}selected{% endif %}>2</option>
+                        <option value="3" {% if rating == 3 %}selected{% endif %}>3</option>
+                        <option value="4" {% if rating == 4 %}selected{% endif %}>4</option>
+                        <option value="5" {% if rating == 5 %}selected{% endif %}>5</option>
                     </select>
                 </div>
                 <div class="form-group">
