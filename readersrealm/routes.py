@@ -351,7 +351,6 @@ def add_review(book_id):
             )
             db.session.add(new_review)
             db.session.commit()
-            flash('Review added successfully!', 'success')
 
             # Redirect to the reviews page after adding the review
             return redirect(url_for('reviews', book_id=book_id))
@@ -371,6 +370,7 @@ def edit_review(review_id):
     if review form is posted check is user id matches the user id
     in the review table, then commit new details of the review to the database.
     """
+
     # Check if the user is logged in
     if 'user_id' not in session:
         flash('Please log in to edit a review.', 'error')
@@ -384,8 +384,7 @@ def edit_review(review_id):
     if book is None:
         return not_found_error(404)
 
-    if session['user_id'] != review.user_id or \
-            session['username'] != request.args.get('username'):
+    if session['user_id'] != review.user_id:
         return forbidden_error(403)
 
     if request.method == 'POST':
@@ -401,12 +400,15 @@ def edit_review(review_id):
         flash('Review updated successfully!', 'success')
         return redirect(url_for('edit_review', review_id=review.id))
 
+    rating = review.rating
+
     return render_template(
         'edit-review.html',
         review=review,
         book=book,
-        review_id=review_id
-        )
+        review_id=review_id,
+        rating=rating
+    )
 
 
 @app.route('/delete_review/<int:review_id>')
@@ -532,7 +534,7 @@ def search():
 
 
 @app.errorhandler(404)
-def not_found_error(error):
+def not_found_error(error_number):
     error_number = 404
     error_message = 'Page Not Found'
     return render_template(
