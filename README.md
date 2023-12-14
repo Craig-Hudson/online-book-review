@@ -14,6 +14,19 @@
     - [User Stories (US)](#user-stories-us)
     - [Design](#design)
     - [Accessability](#accessability)
+    - [Database schema](#database-schema)
+      - [Database](#database)
+      - [Users](#users)
+      - [Authors](#authors)
+      - [Books](#books)
+      - [Reviews](#reviews)
+      - [Genres](#genres)
+      - [Final data schema](#final-data-schema)
+    - [CRUD](#crud)
+      - [Step 1 Create](#step-1-create)
+      - [Step 2 Read](#step-2-read)
+      - [Step 3 Update](#step-3-update)
+      - [Step 4 Delete](#step-4-delete)
   - [Features](#features)
   - [Technologies Used](#technologies-used)
     - [Languages Used](#languages-used)
@@ -76,7 +89,7 @@ If a user want's to be able to add a book to display on the website they must be
   
   <!-- - Users logged in -->
 
-  - Once users are logged in the navigation links at the top will slightly change, login will be replaces with profile, and register is replaced with logout.
+  - Once users are logged in the navigation links at the top will slightly change, login will be replaced with profile, and register is replaced with logout.
   - The profile page consists of the users details, and all the books and reviews they've added.
   - Add book page, to allow users to add books to the website.
   - Edit book page, to allow users to edit any book's they've added.
@@ -84,10 +97,10 @@ If a user want's to be able to add a book to display on the website they must be
   - Edit review page, to allow users to edit any reviews they've added.
 
 - **Imagery**
-  
-  -
 
-  - **Wireframes**
+I have only really used one image, in this app which is used for the background image, throughout the website, the only other images, used will be images of book covers that can be added by users.
+  
+- **Wireframes**
 
  [View wire frames here](./assets/images/wireframe-images/)
 
@@ -100,6 +113,62 @@ I have been attentive to make the website as accessible-friendly as possible thr
 - I also tested my website using wave which reports back to me any errors/contrast errors that may occur.
   
 By implementing the few points above I have made my webpage as accessible and user friendly as possible taking into account those who may be visually impaired and require screen readers for assistance.
+
+
+### Database schema
+
+[Database schema](documentation/readme/database-schema.png)
+
+For my database schema I have created six tables, Users, Authors, Books, Genres, Book genres and Reviews.
+
+#### Database
+
+For this project I decided to use the relational database PostgreSQL, as I felt that with users being able to add book onto the app, that relationships between the users and the books added would be needed, along with reviews for each book also being associated with that certain book.
+
+#### Users
+
+This table was created for the purpose of creating a system for user to be able to register, storing their email, username and passwords into the database.
+
+#### Authors 
+
+This table was created for the purpose of associating the authors with their book, which helps with the search function I have implemented into the app.
+
+#### Books
+
+This table was created for the purpose of users being able to add their own books onto the readers realm app, It will store the title of the book, the author, a description of what the books about, and the publication year, along with an image url, which is not required as a default image is provided.
+
+#### Reviews
+
+This table was created for the purpose of associating reviews with the books, and the users who have made the reviews.
+
+#### Genres
+
+This table was created for the purpose of users being able to search for genres within the search bar, to view all books of a certain genre.
+
+#### Final data schema
+
+[Final database schema](./documentation/readme/final-database-schema.png)
+
+- I have made a few changed in my database schema throughout developing this app, which included add the image url to the database.
+
+### CRUD
+
+#### Step 1 Create
+
+- All the models were created in my models.py file, and then within my routes.py file, by retrieving the form data, making defensive checks, and then adding and committing them to the database.
+
+#### Step 2 Read
+
+- This was achieved by - When users add a book onto the website, All the information of the book will be displayed on the browse books page, it will also be stored on the users profile.
+- Reviews, when users add a review to a book it will be displayed under that books review page, and it will also be viewed on the users profile.
+
+#### Step 3 Update
+
+- Users can update their reviews and they can update the information on the book from their profile page with clear buttons easily visible for users to see that they can edit their reviews and book.
+
+#### Step 4 Delete
+
+_ Users can delete all their reviews and books from their profile page, both reviews and books added have a delete button, but firstly user will be prompted with modal if they are sure they'd like to delete their review or book. If users decide to delete, a review or book, It will be deleted from the whole website.
 
 ## Features
 
