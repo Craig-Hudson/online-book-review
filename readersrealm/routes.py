@@ -46,7 +46,10 @@ def register():
     """
     active_page = 'register'
     page_title = 'Register'
-    return render_template('register.html', active_page=active_page, page_title=page_title)
+    return render_template(
+        'register.html',
+        active_page=active_page,
+        page_title=page_title)
 
 
 @app.route('/register_post', methods=['GET', 'POST'])
@@ -279,7 +282,7 @@ def edit_book(book_id):
         return redirect(url_for('edit_book', book_id=book_id))
 
     return render_template(
-        'edit-book.html', 
+        'edit-book.html',
         book=book,
         page_title=page_title)
 
@@ -466,49 +469,47 @@ def delete_review(review_id):
 
 @app.route('/profile/<username>')
 def profile(username):
-	active_page = 'profile'
+    active_page = 'profile'
 
-	# Get session username
-	if session.get('username'):
-		current_username = session['username']
+    # Get session username
+    if session.get('username'):
+        current_username = session['username']
 
-		# If current user tries accessing profiles, send to 403 Forbidden error
-		if not current_username:
-			return forbidden_error(403)
+        # If current user tries accessing profiles, send to 403 Forbidden error
+        if not current_username:
+            return forbidden_error(403)
 
-		if username == current_username:
-			user = User.query.filter_by(username=username).first()
+        if username == current_username:
+            user = User.query.filter_by(username=username).first()
 
-			# If user ID's match review and books ID's display on users profile
-			if user:
+            # If user ID's match review and books ID's display on users profile
+            if user:
+                review_ids = [
+                    review.id
+                    for review in Review.query.filter_by(user_id=user.id).all()
+                ]
 
-				review_ids = [
-					review.id
-					for review
-					in Review.query.filter_by(user_id=user.id).all()
-				]
+                reviews = Review.query.filter_by(user_id=user.id).all()
+                books = Book.query.filter_by(user_id=user.id).all()
 
-				reviews = Review.query.filter_by(user_id=user.id).all()
-				books = Book.query.filter_by(user_id=user.id).all()
+                # Set the page title to the user's username
+                page_title = f"{user.username}'s Profile"
 
-				# Set the page title to the user's username
-				page_title = f"{user.username}'s Profile"
-
-				return render_template(
-					'profile.html',
-					active_page=active_page,
-					user=user,
-					reviews=reviews,
-					books=books,
-					page_title=page_title,
-					review_ids=review_ids)
-			else:
-				return not_found_error(404)
-		else:
-			return forbidden_error(403)
-	else:
-		flash('Please log in to view profiles.', 'error')
-		return redirect(url_for('login'))
+                return render_template(
+                    'profile.html',
+                    active_page=active_page,
+                    user=user,
+                    reviews=reviews,
+                    books=books,
+                    page_title=page_title,
+                    review_ids=review_ids)
+            else:
+                return not_found_error(404)
+        else:
+            return forbidden_error(403)
+    else:
+        flash('Please log in to view profiles.', 'error')
+        return redirect(url_for('login'))
 
 
 @app.route('/contact', methods=['GET', 'POST'])
