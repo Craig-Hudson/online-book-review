@@ -156,8 +156,8 @@ def browse_books():
     Function that will display all the books that
     users have entered into the database.
     """
-    page_title = 'Browse_books'
-    active_page = 'browse Books'
+    page_title = 'Browse Books'
+    active_page = 'browse_books'
     books = Book.query.all()
     return render_template(
         'browse-books.html',
