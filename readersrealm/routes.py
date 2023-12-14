@@ -28,11 +28,14 @@ def index():
     the two books with the highest ratings.
     """
     active_page = 'index'
+    page_title = 'Home'
     featured_books = Book.query.join(Review).group_by(Book.id).order_by(
         db.func.sum(Review.rating).desc()).limit(2).all()
 
     return render_template(
-        "index.html", active_page=active_page, featured_books=featured_books
+        "index.html", active_page=active_page,
+        featured_books=featured_books,
+        page_title=page_title
         )
 
 
@@ -42,7 +45,8 @@ def register():
     Function to render the register html page
     """
     active_page = 'register'
-    return render_template('register.html', active_page=active_page)
+    page_title = 'Register'
+    return render_template('register.html', active_page=active_page, page_title=page_title)
 
 
 @app.route('/register_post', methods=['GET', 'POST'])
@@ -108,6 +112,7 @@ def login():
     username and password
     """
     active_page = 'login'
+    page_title = 'Login'
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
@@ -124,7 +129,10 @@ def login():
             # Invalid login
             flash('Invalid username or password. Please try again.', 'error')
 
-    return render_template("login.html", active_page=active_page)
+    return render_template(
+        "login.html",
+        active_page=active_page,
+        page_title=page_title)
 
 
 @app.route('/logout')
@@ -143,12 +151,14 @@ def browse_books():
     Function that will display all the books that
     users have entered into the database.
     """
-    active_page = 'browse_books'
+    page_title = 'Browse_books'
+    active_page = 'browse Books'
     books = Book.query.all()
     return render_template(
         'browse-books.html',
         books=books,
-        active_page=active_page
+        active_page=active_page,
+        page_title=page_title
     )
 
 
@@ -159,6 +169,7 @@ def add_book():
     and then check if the user is logged in, if not redirect user to
     login page, if user is logged in render the template for user to access
     """
+    page_title = 'Add Book'
     # Check if a user is logged in
     user_id = session.get('user_id')
 
@@ -167,7 +178,7 @@ def add_book():
         return redirect(url_for('login'))
 
     # User is logged in, render the 'add-book.html' template
-    return render_template('add-book.html')
+    return render_template('add-book.html', page_title=page_title)
 
 
 @app.route('/add_book_form', methods=['GET', 'POST'])
@@ -234,6 +245,7 @@ def edit_book(book_id):
     the user id in the book table,
     and if it does commit changes to the database.
     """
+    page_title = 'Edit Book'
     # Checks if user is in session, if not redirect to login page.
     user_id = session.get('user_id')
     if not user_id:
@@ -266,7 +278,10 @@ def edit_book(book_id):
         flash('Your book has successfully been updated', 'success')
         return redirect(url_for('edit_book', book_id=book_id))
 
-    return render_template('edit-book.html', book=book)
+    return render_template(
+        'edit-book.html', 
+        book=book,
+        page_title=page_title)
 
 
 @app.route('/delete_book/<int:book_id>', methods=['GET', 'POST'])
@@ -302,6 +317,7 @@ def reviews(book_id):
     then query the database for reviews on that given book,
     and display on the reviews page.
     """
+    page_title = 'Reviews'
     try:
         book = Book.query.get(book_id)
         if book is None:
@@ -309,7 +325,11 @@ def reviews(book_id):
 
         reviews = Review.query.filter_by(book_id=book.id).all()
 
-        return render_template('reviews.html', book=book, reviews=reviews)
+        return render_template(
+            'reviews.html',
+            book=book,
+            reviews=reviews,
+            page_title=page_title)
 
     except Exception as e:
         return internal_server_error(e)
@@ -324,6 +344,7 @@ def add_review(book_id):
     Then get the form data including getting the
     users ID and then add and commit to the database
     """
+    page_title = 'Add Review'
     try:
         # Check if the user is logged in
         user_id = session.get('user_id')
@@ -355,7 +376,11 @@ def add_review(book_id):
             # Redirect to the reviews page after adding the review
             return redirect(url_for('reviews', book_id=book_id))
 
-        return render_template('add-review.html', book_id=book_id, book=book)
+        return render_template(
+            'add-review.html',
+            book_id=book_id,
+            book=book,
+            page_title=page_title)
 
     except Exception as e:
         return internal_server_error(e)
@@ -370,7 +395,7 @@ def edit_review(review_id):
     if review form is posted check is user id matches the user id
     in the review table, then commit new details of the review to the database.
     """
-
+    page_title = 'Edit Review'
     # Check if the user is logged in
     if 'user_id' not in session:
         flash('Please log in to edit a review.', 'error')
@@ -407,7 +432,8 @@ def edit_review(review_id):
         review=review,
         book=book,
         review_id=review_id,
-        rating=rating
+        rating=rating,
+        page_title=page_title
     )
 
 
@@ -440,55 +466,49 @@ def delete_review(review_id):
 
 @app.route('/profile/<username>')
 def profile(username):
-    """
-    Render the user profile page.
-    If the user is not logged in, they are redirected
-    to the login page with an error message.
-    If the requested username matches the session username,
-    the user's profile is displayed.
-    If the requested username does not match the session username,
-    an unauthorized access error is flashed.
-    If the requested username does not exist,
-    a user not found error is flashed.
-    """
-    active_page = 'profile'
+	active_page = 'profile'
 
-    # Get session username
-    if session.get('username'):
-        current_username = session['username']
+	# Get session username
+	if session.get('username'):
+		current_username = session['username']
 
-        # If current user tries accessing profiles, send to 403 Forbidden error
-        if not current_username:
-            return forbidden_error(403)
+		# If current user tries accessing profiles, send to 403 Forbidden error
+		if not current_username:
+			return forbidden_error(403)
 
-        if username == current_username:
-            user = User.query.filter_by(username=username).first()
+		if username == current_username:
+			user = User.query.filter_by(username=username).first()
 
-            # If user ID's match review and books ID's display on users profile
-            if user:
+			# If user ID's match review and books ID's display on users profile
+			if user:
 
-                review_ids = [
-                        review.id
-                        for review
-                        in Review.query.filter_by(user_id=user.id).all()
-                        ]
+				review_ids = [
+					review.id
+					for review
+					in Review.query.filter_by(user_id=user.id).all()
+				]
 
-                reviews = Review.query.filter_by(user_id=user.id).all()
-                books = Book.query.filter_by(user_id=user.id).all()
-                return render_template(
-                    'profile.html',
-                    active_page=active_page,
-                    user=user,
-                    reviews=reviews,
-                    books=books,
-                    review_ids=review_ids)
-            else:
-                return not_found_error(404)
-        else:
-            return forbidden_error(403)
-    else:
-        flash('Please log in to view profiles.', 'error')
-        return redirect(url_for('login'))
+				reviews = Review.query.filter_by(user_id=user.id).all()
+				books = Book.query.filter_by(user_id=user.id).all()
+
+				# Set the page title to the user's username
+				page_title = f"{user.username}'s Profile"
+
+				return render_template(
+					'profile.html',
+					active_page=active_page,
+					user=user,
+					reviews=reviews,
+					books=books,
+					page_title=page_title,
+					review_ids=review_ids)
+			else:
+				return not_found_error(404)
+		else:
+			return forbidden_error(403)
+	else:
+		flash('Please log in to view profiles.', 'error')
+		return redirect(url_for('login'))
 
 
 @app.route('/contact', methods=['GET', 'POST'])
