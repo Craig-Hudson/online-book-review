@@ -14,6 +14,8 @@ import os
 # Password pattern that enforces at least 8 characters with
 # 1 number and 1 special character
 
+# https://www.geeksforgeeks.org/password-validation-in-python/
+# The password pattern was taken and adapted from the link above
 PASSWORD_PATTERN = r"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$"
 
 
@@ -192,6 +194,14 @@ def add_book_form():
     if not then add new author to the database.
     then add all the details associated with the book to the database
     """
+
+    user_id = session.get('user_id')
+
+    if 'user_id' not in session:
+        session['login_required'] = True
+        flash('Please log in to add a review.', 'error')
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         title = request.form.get('title')
         author_name = request.form.get('author_name')
@@ -211,8 +221,6 @@ def add_book_form():
 
         if not image_url:
             image_url = url_for('static', filename='images/not-available.webp')
-
-        user_id = session.get('user_id')
 
         # Check if a book with the same title and author already exists
         existing_book = Book.query.join(Author).filter(
@@ -426,7 +434,7 @@ def edit_review(review_id):
         db.session.commit()
 
         flash('Review updated successfully!', 'success')
-        return redirect(url_for('edit_review', review_id=review.id))
+        return redirect(url_for('reviews', book_id=book.id))
 
     rating = review.rating
 
