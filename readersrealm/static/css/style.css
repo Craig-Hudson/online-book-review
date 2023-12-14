@@ -23,6 +23,14 @@ body {
     font-family: 'Merriweather Sans', sans-serif;
 }
 
+.underline {
+    text-decoration: underline;
+}
+
+.underline:hover {
+    font-size: 105%;
+}
+
 /* NAVIGATION */
 
 .navbar-toggler:hover {
