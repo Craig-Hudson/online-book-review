@@ -198,7 +198,6 @@ def add_book_form():
     user_id = session.get('user_id')
 
     if 'user_id' not in session:
-        session['login_required'] = True
         flash('Please log in to add a review.', 'error')
         return redirect(url_for('login'))
 
