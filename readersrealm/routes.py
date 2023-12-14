@@ -14,11 +14,11 @@ import os
 # Password pattern that enforces at least 8 characters with
 # 1 number and 1 special character
 
-password_pattern = r"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$"
+PASSWORD_PATTERN = r"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$"
 
 
 def is_valid_password(password):
-    return re.match(password_pattern, password) is not None
+    return re.match(PASSWORD, password) is not None
 
 
 @app.route("/")
