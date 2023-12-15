@@ -27,7 +27,7 @@ class Book(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     genre = db.Column(db.String(200))
-    description = db.Column(db.String(2000))
+    description = db.Column(db.String(1500))
     publication_year = db.Column(db.Integer)
     image_url = db.Column(db.String(2000), default='not-available.webp')
     author = db.relationship('Author', backref='books')
