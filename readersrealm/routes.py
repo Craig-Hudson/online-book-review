@@ -576,25 +576,25 @@ def not_found_error(error_number):
         error_message=error_message), error_number
 
 
-# @app.errorhandler(500)
-# def internal_server_error(error_number):
-#     error_number = 500
-#     error_message = 'Internal Server Error'
+@app.errorhandler(500)
+def internal_server_error(error_number):
+    error_number = 500
+    error_message = 'Internal Server Error'
 
-#     return render_template(
-#         'error.html',
-#         error_number=error_number,
-#         error_message=error_message), error_number
+    return render_template(
+        'error.html',
+        error_number=error_number,
+        error_message=error_message), error_number
 
 
-# @app.errorhandler(Exception)
-# def generic_error(error_number):
-#     error_number = 500
-#     return render_template(
-#         'error.html',
-#         error_number=error_number,
-#         error_message='Something went wrong'
-#     ), 500
+@app.errorhandler(Exception)
+def generic_error(error_number):
+    error_number = 500
+    return render_template(
+        'error.html',
+        error_number=error_number,
+        error_message='Something went wrong'
+    ), 500
 
 
 @app.errorhandler(403)
