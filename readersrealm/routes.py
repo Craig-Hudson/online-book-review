@@ -20,7 +20,7 @@ PASSWORD_PATTERN = r"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$"
 
 
 def is_valid_password(password):
-    return re.match(PASSWORD, password) is not None
+    return re.match(PASSWORD_PATTERN, password) is not None
 
 
 @app.route("/")
@@ -166,6 +166,9 @@ def browse_books():
         page_title=page_title
     )
 
+def convert_line_breaks(text):
+    # Replace newline characters with HTML line breaks
+    return text.replace('\n', '<br>')
 
 @app.route('/add_book')
 def add_book():
@@ -208,6 +211,8 @@ def add_book_form():
         publication_year = request.form.get('publication_year')
         image_url = request.form.get('image_url')
         genre = request.form.get('genre')
+
+        description = convert_line_breaks(description)
 
         # Check if the author already exists in the database
         author = Author.query.filter_by(name=author_name).first()
@@ -571,25 +576,25 @@ def not_found_error(error_number):
         error_message=error_message), error_number
 
 
-@app.errorhandler(500)
-def internal_server_error(error_number):
-    error_number = 500
-    error_message = 'Internal Server Error'
+# @app.errorhandler(500)
+# def internal_server_error(error_number):
+#     error_number = 500
+#     error_message = 'Internal Server Error'
 
-    return render_template(
-        'error.html',
-        error_number=error_number,
-        error_message=error_message), error_number
+#     return render_template(
+#         'error.html',
+#         error_number=error_number,
+#         error_message=error_message), error_number
 
 
-@app.errorhandler(Exception)
-def generic_error(error_number):
-    error_number = 500
-    return render_template(
-        'error.html',
-        error_number=error_number,
-        error_message='Something went wrong'
-    ), 500
+# @app.errorhandler(Exception)
+# def generic_error(error_number):
+#     error_number = 500
+#     return render_template(
+#         'error.html',
+#         error_number=error_number,
+#         error_message='Something went wrong'
+#     ), 500
 
 
 @app.errorhandler(403)
