@@ -36,7 +36,7 @@
         </div>
     </div>
     <!-- Modal for Book Descriptions -->
-    <div class="modal fade" id="descriptionModal{{ book.id }}" tabindex="-1" role="dialog" aria-label="descriptionModalLabel{{ book.id }}" aria-hidden="true">
+    <div class="modal fade overflow-auto" id="descriptionModal{{ book.id }}" tabindex="-1" role="dialog" aria-label="descriptionModalLabel{{ book.id }}" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
@@ -46,7 +46,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>{{ book.description }}</p>
+                    <p class="contain-description">{{ book.description }}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

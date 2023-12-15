@@ -31,6 +31,14 @@ body {
     font-size: 105%;
 }
 
+.overflow {
+    overflow-y: auto;
+}
+
+.contain-description {
+    word-wrap: break-word;
+}
+
 /* NAVIGATION */
 
 .navbar-toggler:hover {
