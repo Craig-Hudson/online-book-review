@@ -3,7 +3,7 @@
 ------------
 [Link to live site here](https://readers-realm-40212841c1a0.herokuapp.com/  "Link to live site here")
 
-<!-- ![Am I responsive image](assets/images/readme-images/am-i-responsive.webp) -->
+![Am I responsive image](./documentation/readme/am-i-responsive-m3.png)
 
 ## Table of Contents
 
@@ -117,7 +117,7 @@ By implementing the few points above I have made my webpage as accessible and us
 
 ### Database schema
 
-[Database schema](documentation/readme/database-schema.png)
+![Database schema](documentation/readme/database-schema.png)
 
 For my database schema I have created six tables, Users, Authors, Books, Genres, Book genres and Reviews.
 
@@ -147,7 +147,7 @@ This table was created for the purpose of users being able to search for genres 
 
 #### Final data schema
 
-[Final database schema](./documentation/readme/final-database-schema.png)
+![Final database schema](./documentation/readme/final-database-schema.png)
 
 - I have made a few changed in my database schema throughout developing this app, which included add the image url to the database.
 
@@ -429,6 +429,9 @@ To clone the repository:
 -Image by <https://www.freepik.com/free-vector/gradient-no-photo-sign-design_22890125.htm#query=unavailable%20image&position=1&from_view=search&track=ais>
 This image is used as a default image for users who don't enter a URL link in the add book form.
 
+- <https://www.pexels.com/photo/books-on-shelves-1662277/>
+This image is used for the background image.
+
 ### Code Used
 
 - Most of the code in this project was written my myself, references to w3schools and mdn web docs have been made with some of the code also, weather thats remembering a syntax, or re jogging my memory.
@@ -441,7 +444,7 @@ The other content for this project was written by Craig Hudson.
 
 ### media
 
-- All Images for the site were all taken from [vecteezy](https://www.vecteezy.com/)
+- The images for this are royalty free images, some images that user's may add may not be royalty free.
 
 ### Acknowledgments
 
