@@ -6,12 +6,11 @@ function sendMail(contactForm) {
         "message": contactForm.message.value
     })
     .then(
-        function(response) {
-            console.log("SUCCESS", response);
-            $('#successModal').modal('show');  // Show the success modal
+        function() {
+           $('#successModal').modal('show');  // Show the success modal
         },
-        function(error) {
-            console.log("FAILED", error);
+        function() {
+            $('.email-response').html("There was an error with our email service. Please try again in a few minutes.");
         }
     );
     return false;  // To block from loading a new page
