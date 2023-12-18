@@ -387,7 +387,8 @@ def add_review(book_id):
             )
             db.session.add(new_review)
             db.session.commit()
-
+            
+            flash('Your review has been successfully added', 'success')
             # Redirect to the reviews page after adding the review
             return redirect(url_for('reviews', book_id=book_id))
 

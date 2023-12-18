@@ -1,5 +1,4 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="container">
     <div class="row">
         <!-- Column for Book Details -->
@@ -8,18 +7,17 @@
                 <h1 class="text-center mt-2">Reviews for: <span class="pl-1">{{ book.title }}</span></h1>
                 <div class="card mt-4 bg-dark">
                     {% if book.image_url == "not-available.webp" %}
-                        <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}">
+                    <img class="card-img-top review-image" src="{{ url_for('static', filename='images/not-available.webp') }}" alt="{{ book.title }}" />
                     {% else %}
-                        <img class="card-img-top review-image" src="{{ book.image_url }}" alt="{{ book.title }}">
+                    <img class="card-img-top review-image" src="{{ book.image_url }}" alt="{{ book.title }}" />
                     {% endif %}
                     <div class="card-body">
                         <h3 class="card-title text-center larger-font">{{ book.title }}</h3>
                         <hr>
                         <ul class="list-group list-group-flush border border-white text-white">
-                            <li class="list-group-item bg-dark border border-white"><strong>Description:</strong>
-                                <button type="button" class="btn btn-link text-white pl-0 underline" data-toggle="modal" data-target="#descriptionModal{{ book.id }}">
-                                    Read More
-                                </button>
+                            <li class="list-group-item bg-dark border border-white">
+                                <strong>Description:</strong>
+                                <button type="button" class="btn btn-link text-white pl-0 underline" data-toggle="modal" data-target="#descriptionModal{{ book.id }}">Read More</button>
                             </li>
                             <li class="list-group-item bg-dark border border-white"><strong>Author:</strong> {{ book.author.name }}</li>
                             <li class="list-group-item bg-dark border border-white"><strong>Genre:</strong> {{ book.genre }}</li>
@@ -35,9 +33,9 @@
             <div class="row mt-4">
                 <div class="col-md-12 d-flex justify-content-center">
                     {% if not session.get('user_id') %}
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addReviewModal">Add Review</button>
                     {% else %}
-                        <a href="{{ url_for('add_review', book_id=book.id) }}" aria-label="Add review page" class="btn btn-primary"><strong>Add Review</strong></a>
+                    <a href="{{ url_for('add_review', book_id=book.id) }}" aria-label="Add review page" class="btn btn-primary"><strong>Add Review</strong></a>
                     {% endif %}
                 </div>
             </div>
@@ -54,6 +52,15 @@
                         </li>
                         {% endfor %}
                     </ul>
+                    {% with messages = get_flashed_messages() %} {% if messages %}
+                    <div class="alert alert-info">
+                        <ul>
+                            {% for message in messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %} {% endwith %}
                 </div>
             </div>
         </div>
@@ -75,13 +82,13 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <!-- Button to navigate to the login page -->
-                    <a href="{{ url_for('login') }}"  aria-label="Login page" class="btn btn-primary">Login</a>
+                    <a href="{{ url_for('login') }}" aria-label="Login page" class="btn btn-primary">Login</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Book Description (Read More) -->
+    <!-- Modal for Book Description -->
     <div class="modal fade" id="descriptionModal{{ book.id }}" tabindex="-1" role="dialog" aria-label="descriptionModalLabel{{ book.id }}" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-dark text-white">
