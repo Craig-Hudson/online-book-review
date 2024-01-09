@@ -83,7 +83,7 @@ A couple of my html files had errors which have now also been fixed and are all 
 
 - Review Page
   
-![Review page](documentation/wave-reports/review-page-wave.png)
+![Review page](documentation/wave-reports/review-page.png)
 
 - The pages above wave reports have zero errors and zero contrast errors, a few of them have alerts for possible headings and redundant link.
 

@@ -114,7 +114,6 @@ I have been attentive to make the website as accessible-friendly as possible thr
   
 By implementing the few points above I have made my webpage as accessible and user friendly as possible taking into account those who may be visually impaired and require screen readers for assistance.
 
-
 ### Database schema
 
 ![Database schema](documentation/readme/database-schema.png)
@@ -129,7 +128,7 @@ For this project I decided to use the relational database PostgreSQL, as I felt 
 
 This table was created for the purpose of creating a system for user to be able to register, storing their email, username and passwords into the database.
 
-#### Authors 
+#### Authors
 
 This table was created for the purpose of associating the authors with their book, which helps with the search function I have implemented into the app.
 
